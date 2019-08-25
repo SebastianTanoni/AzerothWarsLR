@@ -1,1 +1,4 @@
-maps/
+sourceMaps/*
+compiledMaps/*
+backups/*
+logs/*

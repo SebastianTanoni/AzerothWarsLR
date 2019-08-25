@@ -6,7 +6,9 @@
       {
           "label": "compile",
           "type": "shell",
-          "command": "powershell -ExecutionPolicy ByPass -File ./compile.ps1",
+          "windows": {
+            "command": "call build.bat",
+          },
           "group": {
               "kind": "build",
               "isDefault": true

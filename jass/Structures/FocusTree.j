@@ -1,7 +1,7 @@
 //A system for building a World of Warcraft-like Focus tree, with prerequisites, mutually exclusive focuss, and arbitrary conditions.
 //Note that in Azeroth Wars, each Focus is attached to a Faction, and there is only ever one of each Faction.
 
-library FocusTree initializer Oninit requires Persons, Faction, Table, Event
+library FocusTree initializer OnInit requires Persons, Faction, Table, Event
 
   globals
     Event OnFocusEnabled
