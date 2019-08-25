@@ -1,0 +1,3 @@
+Faction = {
+  name = ""
+}
