@@ -1,3 +1,3 @@
-Person = {
+Team = {
   name = ""
 }
