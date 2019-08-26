@@ -3,10 +3,10 @@ echo Starting build...
 md temp
 
 echo Copying base map to output directory...
-copy sourceMaps\BlankMap.w3x compiledMaps\OutputMap.w3x
+copy sourceMaps\\BlankMap.w3x compiledMaps\\OutputMap.w3x
 
-echo MPQEditor: Extracting war3map.j...
-buildTools\\MPQEditor\MPQEditor.exe extract compiledMaps\\OutputMap.w3x war3map.j compiledMaps
+echo MPQEditor: Extracting war3map.j from AzerothWarsSource...
+buildTools\\MPQEditor\MPQEditor.exe extract sourceMaps\\AzerothWarsSource.w3x war3map.j compiledMaps
 
 echo Merging project .j files into war3map.j...
 pushd jass\
@@ -16,11 +16,12 @@ for /r %%a in (*.j) do (
 )
 popd
 
-echo MPQEditor: adding merged war3map.j back to output map...
-buildTools\\MPQEditor\MPQEditor.exe add compiledMaps\\OutputMap.w3x compiledMaps\\war3map.j /c /auto /r
+echo MPQEditor: adding merged war3map.j into OutputMap.w3x...
+buildTools\\MPQEditor\\MPQEditor.exe add compiledMaps\\war3map.j compiledMaps\\OutputMap.w3x
 
 echo JassHelper: Processing war3map.j...
-buildTools\\JassHelper\\jasshelper.exe buildTools\\common.j buildTools\\Blizzard.j compiledMaps\\OutputMap.w3x
+copy NUL compiledMaps\\compiled.j
+buildTools\\JassHelper\\jasshelper.exe buildTools\\common.j buildTools\\Blizzard.j compiledMaps\\war3map.j compiledMaps\\compiled.j
 
 echo Cleaning up...
 rd /s /q temp

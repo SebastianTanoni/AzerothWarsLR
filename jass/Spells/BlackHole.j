@@ -1,4 +1,4 @@
-library BlackHole initializer OnInit
+/* library BlackHole initializer OnInit
 
     globals
         private constant integer    ABIL_ID                        = 'A00C'
@@ -120,4 +120,4 @@ library BlackHole initializer OnInit
         call TriggerAddCondition( trig, Condition(function Cast) )
     endfunction 
     
-endlibrary
+endlibrary */
