@@ -1,4 +1,4 @@
-library ValiantCharge initializer OnInit requires Filters
+/* library ValiantCharge initializer OnInit requires Filters
 
     globals
         private constant integer     ABIL_ID = 'A00B'
@@ -118,4 +118,4 @@ library ValiantCharge initializer OnInit requires Filters
         call TriggerAddCondition( trig, Condition(function Cast))
     endfunction    
 
-endlibrary
+endlibrary */
