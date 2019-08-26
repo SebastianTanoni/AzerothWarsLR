@@ -1,4 +1,4 @@
-library BlackHole initializer OnInit requires Damage
+library BlackHole initializer OnInit
 
     globals
         private constant integer    ABIL_ID                        = 'A00C'
@@ -56,7 +56,6 @@ library BlackHole initializer OnInit requires Damage
                 set x = GetUnitX(u)
                 set y = GetUnitY(u)
                 set dist = GetDistanceBetweenPoints(x, y, this.x, this.y)
-                call Damage_Spell(this.cas, u, ((RADIUS - dist)/RADIUS) * this.damage/T32_FPS)
                 if not IsUnitType(u, UNIT_TYPE_RESISTANT) then
                     set ang = GetAngleBetweenPoints(x, y, this.x, this.y)
                     call SetUnitX(u, x + (PULL/T32_FPS)*Cos(ang))
