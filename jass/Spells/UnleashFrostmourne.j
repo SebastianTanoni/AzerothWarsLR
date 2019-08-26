@@ -29,7 +29,7 @@ library UnleashFrostmourne initializer OnInit requires Projectile, SpellHelpers
             call p.terminate() 
             if IsUnitEnemy(u,P) and IsUnitAlive(u) and not IsUnitType(u, UNIT_TYPE_UNDEAD) then     //Organic hostile
                 call UnitDamageTarget(p.sourceUnit, u, p.damageDealt, false, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
-            elseif IsUnitAlly(u,P) and naIsUnitAlive(u) and IsUnitType(u, UNIT_TYPE_UNDEAD) then      //Undead friendly
+            elseif IsUnitAlly(u,P) and IsUnitAlive(u) and IsUnitType(u, UNIT_TYPE_UNDEAD) then      //Undead friendly
                 call UnitHeal(p.sourceUnit, u, p.damageDealt*HEAL_RATIO)
             elseif IsUnitCorpse(u) and not IsUnitType(u, UNIT_TYPE_RESISTANT) then                  //Corpse
                 call UnitReanimate(p.sourceUnit, u, REANIMATE_DUR)

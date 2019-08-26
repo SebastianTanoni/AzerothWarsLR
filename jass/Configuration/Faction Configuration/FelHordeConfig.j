@@ -9,8 +9,6 @@ library FelHordeConfig initializer OnInit requires Faction
         local Faction f
         
         set f = Faction.create(FACTION_FEL_HORDE,"Fel Horde", PLAYER_COLOR_GREEN, "|c0020c000","ReplaceableTextures\\CommandButtons\\BTNPitLord.blp")
-            call f.setExitTrigger(FelHordeExitTrigger)
-
             call f.registerObjectLimit('ogre', UNLIMITED)   //Great Hall
             call f.registerObjectLimit('ostr', UNLIMITED)   //Stronghold
             call f.registerObjectLimit('ofrt', UNLIMITED)   //Fortress

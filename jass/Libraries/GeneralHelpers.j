@@ -5,6 +5,14 @@ library GeneralHelpers
     private force DestForce = null
   endglobals
   
+  function GetRectRandomY takes rect whichRect returns real
+    return GetRandomReal(GetRectMinY(whichRect), GetRectMaxY(whichRect))
+  endfunction
+
+  function GetRectRandomX takes rect whichRect returns real
+    return GetRandomReal(GetRectMinX(whichRect), GetRectMaxX(whichRect))
+  endfunction
+
   private function ForceAddForceEnum takes nothing returns nothing
     call ForceAddPlayer(DestForce, GetEnumPlayer())
   endfunction

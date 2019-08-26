@@ -5,8 +5,8 @@ library EventDalaranDies initializer OnInit requires DemonInstantiationBarrierCo
   private function Dies takes nothing returns nothing
     set DemonInstantiationBarrier.barriersByIndex[DEMON_INSTANTIATION_BARRIER_DALARAN].enabled = false
 
-    call DisableTrigger( gg_trg_Dalaran_Generator_Aura )
-    call RemoveWeatherEffectBJ( udg_DalaranAura )
+    //call DisableTrigger( gg_trg_Dalaran_Generator_Aura )
+    //call RemoveWeatherEffectBJ( udg_DalaranAura )
     call DisplayTextToForce(bj_FORCE_ALL_PLAYERS, "With the Violet Citadel destroyed, the mystical aura surrounding it has fallen as well. The Undead are no longer harmed by its effects, and Demons can be Instantiated into the city.")   
     call DestroyTrigger(GetTriggeringTrigger())
   endfunction

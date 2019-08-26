@@ -20,8 +20,8 @@ library EventLichKing initializer OnInit requires Artifact
         endif
         call RemoveUnit(gg_unit_u000_0649)      //The Frozen Throne
         call RemoveUnit(GetTriggerUnit())
-        call DisableTrigger( gg_trg_ThrallnNZ )
-        call DisableTrigger( gg_trg_Throne_Protection_2 )
+        //call DisableTrigger( gg_trg_ThrallnNZ )
+        //call DisableTrigger( gg_trg_Throne_Protection_2 )
         call DisplayTextToForce( GetPlayersAll(), "Arthas has ascended to the Frozen Throne itself, and freed the Lich King from his imprisonment. Ner'zhul now has the host body he so desired, and it seems that stopping the Lich King will be harder than ever." )
         //Cleanup
         set DeathKnight = null

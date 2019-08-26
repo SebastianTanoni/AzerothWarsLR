@@ -2,7 +2,7 @@ library AdjustCamera initializer OnInit requires Persons
 
     //**CONFIG
     globals
-        private constant string COMMAND_CAM     = "-cam "
+        private constant string COMMAND     = "-cam "
         
     endglobals
     //*ENDCONFIG
