@@ -125,11 +125,11 @@ library DemonGroupMenu initializer OnInit requires DemonGroup, Event, UnitType, 
             local DemonType tempDemonType = this.whichDemonGroup.whichDemonType
 
             if tempDemonType.instantiationType == INSTANTIATION_TYPE_NORMAL then
-                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Normal|n" + TOOLTIP_COLOR + "Instantion Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit is Warped directly beside the summoning portal.")
+                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Normal|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit is Warped directly beside the summoning portal.")
             elseif tempDemonType.instantiationType == INSTANTIATION_TYPE_WARP then
-                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Dimensional|n" + TOOLTIP_COLOR + "Instantion Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.instantiationRange)) + ", fading in over a brief duration during which it cannot act but can be attacked.")
+                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Dimensional|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.instantiationRange)) + ", fading in over a brief duration during which it cannot act but can be attacked.")
             elseif tempDemonType.instantiationType == INSTANTIATION_TYPE_METEOR then
-                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Meteor|n" + TOOLTIP_COLOR + "Instantion Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.instantiationRange)) + ", falling from the sky as a colossal meteor that deals " + I2S(R2I(tempDemonType.instantiationDamage)) + " damage upon impact.")
+                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Meteor|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.instantiationRange)) + ", falling from the sky as a colossal meteor that deals " + I2S(R2I(tempDemonType.instantiationDamage)) + " damage upon impact.")
             endif
         endmethod
 
