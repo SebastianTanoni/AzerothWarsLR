@@ -16,8 +16,11 @@ for /r %%a in (*.j) do (
 )
 popd
 
+echo MPQEditor: adding merged war3map.j back to output map...
+buildTools\\MPQEditor\MPQEditor.exe add compiledMaps\\OutputMap.w3x compiledMaps\\war3map.j /c /auto /r
+
 echo JassHelper: Processing war3map.j...
-buildTools\\JassHelper\\jasshelper.exe buildTools\\common.j buildTools\\Blizzard.j compiledMaps\\war3map.j compiledMaps\\war3map.j --scriptonly
+buildTools\\JassHelper\\jasshelper.exe buildTools\\common.j buildTools\\Blizzard.j compiledMaps\\OutputMap.w3x
 
 echo Cleaning up...
 rd /s /q temp

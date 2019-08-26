@@ -1,4 +1,4 @@
-//A system for building a World of Warcraft-like Focus tree, with prerequisites, mutually exclusive focuss, and arbitrary conditions.
+/* //A system for building a World of Warcraft-like Focus tree, with prerequisites, mutually exclusive focuss, and arbitrary conditions.
 //Note that in Azeroth Wars, each Focus is attached to a Faction, and there is only ever one of each Faction.
 
 library FocusTree initializer OnInit requires Persons, Faction, Table, Event
@@ -18,7 +18,7 @@ library FocusTree initializer OnInit requires Persons, Faction, Table, Event
     readonly static thistype triggerPrerequisite
     readonly static thistype triggerExclusive
     readonly static thistype triggerDependent
-    readonly ArbitraryCondition thistype triggerArbitraryCondition
+    readonly ArbitraryCondition triggerArbitraryCondition
 
     readonly integer id
     readonly string icon
@@ -39,7 +39,7 @@ library FocusTree initializer OnInit requires Persons, Faction, Table, Event
     private method disable takes nothing returns nothing
       if this.enabled then
         set this.enabled = false
-        set this = thistype.GetTriggerFocus
+        set this = thistype.triggerFocus
         call OnFocusDisabled.fire()
       endif
     endmethod
@@ -47,7 +47,7 @@ library FocusTree initializer OnInit requires Persons, Faction, Table, Event
     private method enable takes nothing returns nothing
       if not this.enabled then
         set this.enabled = true
-        set this = thistype.GetTriggerFocus
+        set this = thistype.triggerFocus
         call OnFocusEnabled.fire()
       endif
     endmethod
@@ -155,4 +155,4 @@ library FocusTree initializer OnInit requires Persons, Faction, Table, Event
     set OnFocusAddArbitraryCondition = Event.create()
   endfunction
 
-endlibrary
+endlibrary */

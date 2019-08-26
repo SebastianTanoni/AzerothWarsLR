@@ -1,4 +1,4 @@
-library TrackStats initializer OnInit requires MMD, MMDInit, Persons
+/* library TrackStats initializer OnInit requires MMD, MMDInit, Persons
     
     private function UnitDies takes nothing returns nothing
         local unit deadUnit = GetTriggerUnit()
@@ -83,3 +83,4 @@ library TrackStats initializer OnInit requires MMD, MMDInit, Persons
     endfunction        
 
 endlibrary
+ */

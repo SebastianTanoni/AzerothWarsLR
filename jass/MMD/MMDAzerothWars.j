@@ -1,4 +1,4 @@
-library MMDAzerothWars initializer OnInit requires MMD, Persons
+/* library MMDAzerothWars initializer OnInit requires MMD, Persons
 
   globals
     private constant real SCORE_EARLY_VICTORY = 1000.
@@ -118,4 +118,4 @@ library MMDAzerothWars initializer OnInit requires MMD, Persons
     call TriggerAddAction(trig, function Setup)
   endfunction
 
-endlibrary
+endlibrary */
