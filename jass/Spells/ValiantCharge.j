@@ -1,4 +1,4 @@
-library ValiantCharge initializer OnInit requires Filters, CollisionStack
+library ValiantCharge initializer OnInit requires Filters
 
     globals
         private constant integer     ABIL_ID = 'A00B'
