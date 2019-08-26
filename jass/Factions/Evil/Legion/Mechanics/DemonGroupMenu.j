@@ -245,6 +245,7 @@ library DemonGroupMenu initializer OnInit requires DemonGroup, Event, UnitType, 
         call BlzFrameSetVisible(LegionBarBackdrop, false)
 
         set LegionMana = BlzCreateSimpleFrame("MyBarEx", LegionBarBackdrop, GetHandleId(LegionBarBackdrop))
+        call BlzFrameSetParent(LegionMana, LegionBarBackdrop)
         call BlzFrameSetPoint(LegionMana, FRAMEPOINT_TOP, LegionBarBackdrop, FRAMEPOINT_BOTTOM, 0.05, -0.004)
         call BlzFrameSetSize(LegionMana, LEGION_BAR_WIDTH*0.65, LEGION_BAR_HEIGHT*0.4)
 
