@@ -731,7 +731,7 @@ library Projectile initializer OnInit requires AIDS, T32, ListModule, optional R
     //  Configurables: See above for descriptions.
     //
     globals
-        public  constant integer DUMMY_ID            = 'h000'
+        public  constant integer DUMMY_ID            = 'h02N'
         public  constant integer CROW_FORM           = 'Amrf'
         public  constant player  OWNER_ID            = Player(PLAYER_NEUTRAL_PASSIVE)
         public  constant boolean RECYCLE             = false
