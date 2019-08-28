@@ -38,30 +38,8 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
     method destroy takes nothing returns nothing
       call DestroyGroup(this.grp)
       set this.grp = null
-      call this.stopPeriodic()
       call this.deallocate()
     endmethod
-
-    method periodic takes nothing returns nothing          
-      local unit u = null
-      local integer i = 0  
-      set this.tick = this.tick+1   
-
-      loop
-      exitwhen i == BlzGroupGetSize(this.grp)
-        set u = BlzGroupUnitAt(this.grp, i)
-        call SetUnitVertexColor(u, 255, 255, 255, R2I( (this.tick / this.dur)*255))
-        set i = i + 1
-      endloop
-      set u = null
-
-      //The unit has finished warping
-      if this.tick == this.dur then
-          call this.destroy()
-      endif     
-    endmethod
-
-    implement T32x
 
     static method create takes unit caster, DemonGroup whichDemonGroup, real x, real y, real dur, integer limit returns thistype
       local thistype this = thistype.allocate()
@@ -104,7 +82,8 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       set u = null
     
       call DestroyEffect(AddSpecialEffect(INSTANTIATION_EFFECT_NORMAL, GetUnitX(FirstOfGroup(this.grp)), GetUnitY(FirstOfGroup(this.grp))))   
-      call this.startPeriodic()
+
+      call this.destroy()
       
       return this                
     endmethod             
@@ -140,23 +119,22 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       local unit u = null
       //Clean SFX
       call BlzSetSpecialEffectScale(tempSfx, INSTANTIATION_SCALE_WARP)
-      call DestroyEffect(tempSfx)       
-
-      //Let group go
+      call DestroyEffect(tempSfx)    
+      set tempSfx = null
+   
       set i = 0
       loop
-      exitwhen i == BlzGroupGetSize(this.grp)
-        set u = BlzGroupUnitAt(this.grp, i)
+        set u = FirstOfGroup(this.grp)
+        exitwhen u == null
         call PauseUnit(u, false)
         call DemonType.startDuration(u)
+        call SetUnitVertexColor(u, 255, 255, 255, 255)
         if GetDistanceBetweenPointsEx(this.x, this.y, this.tarX, this.tarY) > 50 then
           call IssuePointOrder(u, "attack", this.tarX, this.tarY)
         endif
         set i = i + 1
-      endloop
-      set u = null
-
-      set tempSfx = null
+        call GroupRemoveUnit(this.grp, u)
+      endloop 
     endmethod
 
     method periodic takes nothing returns nothing     
@@ -168,14 +146,6 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       if this.tick == this.dur then
         call DestroyEffect(this.sfxA)
         call this.finish()
-      else
-        loop
-        exitwhen i == BlzGroupGetSize(this.grp)
-          set u = BlzGroupUnitAt(this.grp, i)
-          call SetUnitVertexColor(u, 255, 255, 255, R2I( (this.tick / this.dur)*255))
-          set i = i + 1
-        endloop
-        set u = null
       endif     
 
       //Begin fadeout
