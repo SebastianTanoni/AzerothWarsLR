@@ -14,7 +14,6 @@ library PlayerLeaves initializer OnInit requires Persons
 
         if Persons[pId] != 0 then
             call Persons[pId].leave()
-            call Persons[pId].setStatus("Left")
             call Persons[pId].setTeam(-1)
             call Persons[pId].setFaction(-1)
             call Persons[pId].destroy()

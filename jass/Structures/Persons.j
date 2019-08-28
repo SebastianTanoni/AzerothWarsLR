@@ -25,7 +25,6 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
     //readonly static group allCapitals = null
 
     readonly string name = null
-    readonly string status = null             //Playing, Left, Obs or Empty
     readonly Faction faction                  //Controls name, available objects, color, and icon
     readonly FactionMod array factionMods[15] //A list of FactionMods, which contribute to the list of available objects for this player
     readonly Team team                        //The team this person is on
@@ -346,28 +345,6 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
       set thistype.triggerPerson = this
       call OnPersonFactionChange.fire()
     endmethod
-    
-    method getStatus takes nothing returns string
-      return this.status
-    endmethod
-    
-    method setStatus takes string s returns nothing
-      if s == "Obs" then
-        call ForceAddPlayer(Observers, this.p)
-      else
-        call ForceRemovePlayer(Observers, this.p)
-      endif
-  
-      set this.status = s
-    endmethod
-    
-    method initializeStatus takes nothing returns nothing
-      if GetPlayerSlotState(this.p) == PLAYER_SLOT_STATE_PLAYING then
-        call this.setStatus("Playing")
-      else
-        call this.setStatus("Empty")
-      endif           
-    endmethod     
 
     //Any time the player loses the game. E.g. Frozen Throne loss, Kil'jaeden loss
     method obliterate takes nothing returns nothing
@@ -491,7 +468,7 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
       set recipient = null
     endmethod
 
-    //This should get used any time a player exits the game without being defeated; IE they left, went afk, went to observer status, or triggered an event that causes this
+    //This should get used any time a player exits the game without being defeated; IE they left, went afk, became an observer, or triggered an event that causes this
     method leave takes nothing returns nothing
       if this.team.size > 0 then
         call this.distributeUnits()
@@ -523,7 +500,6 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
       //set this.startingCapitals = CreateGroup()
       
       call this.setName(GetPlayerName(p))
-      call this.initializeStatus()
       set Persons[GetPlayerId(p)] = this
       
       return this           
