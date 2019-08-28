@@ -1,27 +1,43 @@
-@echo off
-echo Starting build...
+@ECHO off
+ECHO Starting build...
 md temp
+SET tempdir=temp
+SET toolsdir=buildTools
+SET sourcedir=sourceMaps
+SET destdir=compiledMaps
+SET sourcemap=%1
+SET templatemap=%2
+SET newmap=%3
 
-echo Copying base map to output directory...
-copy sourceMaps\\BlankMap.w3x compiledMaps\\OutputMap.w3x
+ECHO Copying base map to temp directory...
+copy %sourcedir%\\%sourcemap% %tempdir%
 
-echo MPQEditor: Extracting war3map.j from AzerothWarsSource...
-buildTools\\MPQEditor\MPQEditor.exe extract sourceMaps\\AzerothWarsSource.w3x war3map.j compiledMaps
+ECHO Copying terrain map to map temp directory...
+copy %sourcedir%\\%templatemap% %tempdir%
 
-echo Merging project .j files into war3map.j...
+ECHO MPQEditor: Extracting war3map.j from source map...
+%toolsdir%\\MPQEditor\\MPQEditor.exe extract %sourcedir%\\%sourcemap% war3map.j %tempdir%
+
+ECHO Merging project .j files into war3map.j...
 pushd jass\
 for /r %%a in (*.j) do (
-  type "%%a" >> "e:\\Users\\Zak\\Documents\\YakaryBovine Maps\\AzerothWarsLR\\compiledMaps\\war3map.j"
-  echo. >> "e:\\Users\\Zak\\Documents\\YakaryBovine Maps\\AzerothWarsLR\\compiledMaps\\war3map.j"
+  TYPE "%%a" >> "e:\\Users\\Zak\\Documents\\YakaryBovine Maps\\AzerothWarsLR\\%tempdir%\\war3map.j"
+  ECHO. >> "e:\\Users\\Zak\\Documents\\YakaryBovine Maps\\AzerothWarsLR\\%tempdir%\\war3map.j"
 )
 popd
 
-echo MPQEditor: adding merged war3map.j into OutputMap.w3x...
-buildTools\\MPQEditor\\MPQEditor.exe add compiledMaps\\war3map.j compiledMaps\\OutputMap.w3x
+ECHO MPQEditor: adding merged war3map.j into template map...
+%toolsdir%\\MPQEditor\\MPQEditor.exe add %tempdir%\\%templatemap% %tempdir%\\war3map.j
 
-echo JassHelper: Processing war3map.j...
-copy NUL compiledMaps\\compiled.j
-buildTools\\JassHelper\\jasshelper.exe buildTools\\common.j buildTools\\Blizzard.j compiledMaps\\war3map.j compiledMaps\\compiled.j
+ECHO JassHelper: Processing war3map.j...
+COPY NUL %tempdir%\\compiled.j
+%toolsdir%\\JassHelper\\jasshelper.exe %toolsdir%\\common.j %toolsdir%\\Blizzard.j %tempdir%\\%templatemap%
 
-echo Cleaning up...
+ECHO WC3MapOptimizer: Optimizing and protecting map...
+%toolsdir%\\WC3Optimizer\\VXJWTSOPT.exe %tempdir%\\%templatemap% --do %tempdir%\\%newmap% --checkmapstuff --checkcrash --exit
+
+ECHO Copying finished map from temp directory to output directory...
+COPY %tempdir%\\%newmap% %destdir%\\%newmap%
+
+ECHO Cleaning up temp directory...
 rd /s /q temp
