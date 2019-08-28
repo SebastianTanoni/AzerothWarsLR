@@ -1,6 +1,7 @@
 @ECHO off
 ECHO Starting build...
 md temp
+SET rootdir=%cd%
 SET tempdir=temp
 SET toolsdir=buildTools
 SET sourcedir=sourceMaps
@@ -21,8 +22,8 @@ ECHO MPQEditor: Extracting war3map.j from source map...
 ECHO Merging project .j files into war3map.j...
 pushd jass\
 for /r %%a in (*.j) do (
-  TYPE "%%a" >> "e:\\Users\\Zak\\Documents\\YakaryBovine Maps\\AzerothWarsLR\\%tempdir%\\war3map.j"
-  ECHO. >> "e:\\Users\\Zak\\Documents\\YakaryBovine Maps\\AzerothWarsLR\\%tempdir%\\war3map.j"
+  TYPE "%%a" >> "%rootdir%\\%tempdir%\\war3map.j"
+  ECHO. >> "%rootdir%\\%tempdir%\\war3map.j"
 )
 popd
 
@@ -30,7 +31,6 @@ ECHO MPQEditor: adding merged war3map.j into template map...
 %toolsdir%\\MPQEditor\\MPQEditor.exe add %tempdir%\\%templatemap% %tempdir%\\war3map.j
 
 ECHO JassHelper: Processing war3map.j...
-COPY NUL %tempdir%\\compiled.j
 %toolsdir%\\JassHelper\\jasshelper.exe %toolsdir%\\common.j %toolsdir%\\Blizzard.j %tempdir%\\%templatemap%
 
 ECHO WC3MapOptimizer: Optimizing and protecting map...
