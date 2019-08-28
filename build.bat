@@ -1,4 +1,4 @@
-@ECHO off
+@ECHO on
 ECHO Starting build...
 md temp
 SET rootdir=%cd%
@@ -31,7 +31,8 @@ ECHO MPQEditor: adding merged war3map.j into template map...
 %toolsdir%\\MPQEditor\\MPQEditor.exe add %tempdir%\\%templatemap% %tempdir%\\war3map.j
 
 ECHO JassHelper: Processing war3map.j...
-%toolsdir%\\JassHelper\\jasshelper.exe %toolsdir%\\common.j %toolsdir%\\Blizzard.j %tempdir%\\%templatemap%
+COPY NUL %tempdir%\\compiled.j
+%toolsdir%\\JassHelper\\jasshelper.exe %toolsdir%\\common.j %toolsdir%\\Blizzard.j %tempdir%\\war3map.j %tempdir%\\compiled.j
 
 ECHO WC3MapOptimizer: Optimizing and protecting map...
 %toolsdir%\\WC3Optimizer\\VXJWTSOPT.exe %tempdir%\\%templatemap% --do %tempdir%\\%newmap% --checkmapstuff --checkcrash --exit
@@ -40,4 +41,4 @@ ECHO Copying finished map from temp directory to output directory...
 COPY %tempdir%\\%newmap% %destdir%\\%newmap%
 
 ECHO Cleaning up temp directory...
-rd /s /q temp
+rd /s /q %tempdir%

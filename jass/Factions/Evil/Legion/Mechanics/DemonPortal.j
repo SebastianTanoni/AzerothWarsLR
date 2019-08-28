@@ -111,11 +111,7 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       if DemonGroup.first.getSize() != 0 then
         set x = GetOrderPointX()
         set y = GetOrderPointY()
-        if IsPlayerShiftDown(GetTriggerPlayer()) then //Perform mass Instantiation
-          call tempDemonPortal.instantiate(DemonGroup.first, x, y, MASS_INSTANTIATION_LIMIT)
-        else
-          call tempDemonPortal.instantiate(DemonGroup.first, x, y, 1)
-        endif
+        call tempDemonPortal.instantiate(DemonGroup.first, x, y, 1)
       endif
     endif
   endfunction
@@ -136,11 +132,7 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       if DemonGroup.first.getSize() != 0 then
         set x = GetUnitX(GetOrderTargetUnit())
         set y = GetUnitY(GetOrderTargetUnit())
-        if IsPlayerShiftDown(GetTriggerPlayer()) then //Perform mass Instantiation
-          call tempDemonPortal.instantiate(DemonGroup.first, x, y, MASS_INSTANTIATION_LIMIT) 
-        else
-          call tempDemonPortal.instantiate(DemonGroup.first, x, y, 1)
-        endif     
+        call tempDemonPortal.instantiate(DemonGroup.first, x, y, 1) 
       endif
     endif
   endfunction    
