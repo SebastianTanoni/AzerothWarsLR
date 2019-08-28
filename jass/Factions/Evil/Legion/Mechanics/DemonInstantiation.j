@@ -73,7 +73,6 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       exitwhen i == BlzGroupGetSize(this.grp)
         set u = BlzGroupUnitAt(this.grp, i)
         call SetUnitPosition(u, this.x, this.y)
-        call SetUnitVertexColor(u, 255, 255, 255, 0)
         call DemonType.startDuration(u)
         call IssuePointOrder(u, "attack", x, y)   
         call SetUnitFacing(u, ang)    
@@ -126,9 +125,9 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       loop
         set u = FirstOfGroup(this.grp)
         exitwhen u == null
+        call ShowUnit(u, true)
         call PauseUnit(u, false)
         call DemonType.startDuration(u)
-        call SetUnitVertexColor(u, 255, 255, 255, 255)
         if GetDistanceBetweenPointsEx(this.x, this.y, this.tarX, this.tarY) > 50 then
           call IssuePointOrder(u, "attack", this.tarX, this.tarY)
         endif
@@ -195,9 +194,9 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       loop
       exitwhen i == BlzGroupGetSize(this.grp)
         set u = BlzGroupUnitAt(this.grp, i)
+        call ShowUnit(u, false)
         call PauseUnit(u, true)
         call SetUnitPosition(u, this.x, this.y)
-        call SetUnitVertexColor(u, 255, 255, 255, 0)
         set i = i + 1
       endloop
       set u = null
