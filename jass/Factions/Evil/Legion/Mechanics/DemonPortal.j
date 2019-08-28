@@ -1,4 +1,4 @@
-library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTypeConfig, LegionConfig, Event, GeneralHelpers
+library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTypeConfig, LegionConfig, Event, GeneralHelpers, DemonInstantiationBarrier
 
   globals
     private constant real DISINTEREST_MULT = 1  
@@ -36,19 +36,20 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       local integer newLimit = 0      //How many units from this group can be summoned
       local real cost = 0
 
-      if tempDemonType.instantiationCost == 0 then
-        set newLimit = limit
-      else
-        set newLimit = IMinBJ ( R2I(mana / tempDemonType.instantiationCost), limit)
-      endif
-
-      if newLimit > 0 and tempDemonType.instantiationType == INSTANTIATION_TYPE_METEOR then
-        set newLimit = 1
-      endif
-      set cost = newLimit*tempDemonType.instantiationCost
-      if newLimit > 0 then
-        call whichDemonGroup.instantiate(this.u, x, y, newLimit)
-        call modMana(-cost)
+      if not IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY) and GetDistanceBetweenPointsEx(GetUnitX(.u), GetUnitY(.u), x, y) > -1 and not IsPointInDemonInstantiationBarrier(x, y) then
+        if tempDemonType.instantiationCost == 0 then
+          set newLimit = limit
+        else
+          set newLimit = IMinBJ ( R2I(mana / tempDemonType.instantiationCost), limit)
+        endif
+        if newLimit > 0 and tempDemonType.instantiationType == INSTANTIATION_TYPE_METEOR then
+          set newLimit = 1
+        endif
+        set cost = newLimit*tempDemonType.instantiationCost
+        if newLimit > 0 then
+          call whichDemonGroup.instantiate(this.u, x, y, newLimit)
+          call modMana(-cost)
+        endif
       endif
       return false
     endmethod
