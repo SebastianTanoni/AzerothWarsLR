@@ -6,9 +6,9 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
     constant integer INSTANTIATION_TYPE_METEOR = 2
 
     constant string INSTANTIATION_EFFECT_NORMAL = "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl"
-    constant string INSTANTIATION_EFFECT_WARP_AREA = "war3mapImported\\Void Teleport To.mdx"
-    constant string INSTANTIATION_EFFECT_WARP_CASTER = "war3mapImported\\Void Teleport Caster.mdx"
-    constant string INSTANTIATION_EFFECT_WARP_TARGET = "war3mapImported\\Void Teleport Target.mdx"        
+    constant string INSTANTIATION_EFFECT_WARP_AREA = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTo.mdl"
+    constant string INSTANTIATION_EFFECT_WARP_CASTER = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl"
+    constant string INSTANTIATION_EFFECT_WARP_TARGET = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl"        
     constant string INSTANTIATION_EFFECT_METEOR = "Units\\Demon\\Infernal\\InfernalBirth.mdl"
 
     constant real INSTANTIATION_RANGE_NORMAL = 200.
@@ -20,8 +20,6 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
     constant real INSTANTIATION_RADIUS_METEOR = 200.
 
     constant real INSTANTIATION_DURATION_WARP = 2.
-
-    constant real INSTANTIATION_FADE_WARP = 1.0 //How long the Warp animation spends fading after the unit is finished Warping
 
     constant real INSTANTIATION_DURATION_NORMAL = 0.5
 
@@ -101,22 +99,11 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
     private effect sfxA = null
 
     method destroy takes nothing returns nothing
-      call BlzSetSpecialEffectPosition(this.sfxA, 100000, 100000, 0)
-      call DestroyGroup(this.grp)
-      call DestroyEffect(this.sfxA)
-      call this.stopPeriodic()
-
-      set this.grp = null
-      set this.sfxA = null
-
-      call this.deallocate()
-    endmethod
-
-    method finish takes nothing returns nothing
-      local effect tempSfx = AddSpecialEffect(INSTANTIATION_EFFECT_WARP_TARGET, this.x, this.y)
+      local effect tempSfx = null
       local integer i = 0
       local unit u = null
-      //Clean SFX
+
+      set tempSfx = AddSpecialEffect(INSTANTIATION_EFFECT_WARP_TARGET, this.x, this.y)
       call BlzSetSpecialEffectScale(tempSfx, INSTANTIATION_SCALE_WARP)
       call DestroyEffect(tempSfx)    
       set tempSfx = null
@@ -134,6 +121,14 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
         set i = i + 1
         call GroupRemoveUnit(this.grp, u)
       endloop 
+
+      call DestroyGroup(this.grp)
+      call DestroyEffect(this.sfxA)
+      set this.grp = null
+      set this.sfxA = null
+
+      call this.stopPeriodic()
+      call this.deallocate()
     endmethod
 
     method periodic takes nothing returns nothing     
@@ -141,21 +136,10 @@ library DemonInstantiation requires Table, Event, T32, Filters, Math, Instance
       local unit u = null
       set this.tick = this.tick+1   
 
-      //The group has finished warping (animation is not over)
       if this.tick == this.dur then
         call DestroyEffect(this.sfxA)
-        call this.finish()
-      endif     
-
-      //Begin fadeout
-      if this.tick > this.dur then
-        call BlzSetSpecialEffectAlpha( this.sfxA, R2I(255*( 1 - ( ( this.tick - this.dur ) / (INSTANTIATION_FADE_WARP*T32_FPS) ) ) ))
-      endif    
-
-      //Actual entire end of the warp
-      if (this.tick - INSTANTIATION_FADE_WARP*T32_FPS) > this.dur then
         call this.destroy()
-      endif
+      endif     
     endmethod
 
     implement T32x
