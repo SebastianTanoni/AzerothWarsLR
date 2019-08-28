@@ -1,4 +1,4 @@
-@ECHO on
+@ECHO off
 ECHO Starting build...
 md temp
 SET rootdir=%cd%

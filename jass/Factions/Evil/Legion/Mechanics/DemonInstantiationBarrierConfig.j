@@ -1,4 +1,4 @@
-library DemonInstantiationBarrierConfig initializer OnInit requires DemonInstantiation
+library DemonInstantiationBarrierConfig initializer OnInit requires DemonInstantiationBarrier
 
   globals
     constant integer DEMON_INSTANTIATION_BARRIER_DALARAN = 0
