@@ -1,11 +1,11 @@
 library DemonWarpMeteor requires Table, Event, T32, Filters, Math, Instance
 
   globals
-    constant integer INSTANTIATION_TYPE_METEOR = 2
-    constant string INSTANTIATION_EFFECT_METEOR = "Units\\Demon\\Infernal\\InfernalBirth.mdl"
-    constant real INSTANTIATION_RANGE_METEOR = 3000.
-    constant real INSTANTIATION_DAMAGE_METEOR = 50.
-    constant real INSTANTIATION_RADIUS_METEOR = 200.
+    constant integer WARP_TYPE_METEOR = 2
+    constant string WARP_EFFECT_METEOR = "Units\\Demon\\Infernal\\InfernalBirth.mdl"
+    constant real WARP_RANGE_METEOR = 3000.
+    constant real WARP_DAMAGE_METEOR = 50.
+    constant real WARP_RADIUS_METEOR = 200.
   endglobals
 
   struct Meteor //The animation that plays out to bring an Infernal or similar unit to the world
@@ -60,11 +60,11 @@ library DemonWarpMeteor requires Table, Event, T32, Filters, Math, Instance
 
       set u = FirstOfGroup(this.grp)
       set P = GetOwningPlayer(u)  
-      call GroupEnumUnitsInRange(TempGroup,this.x,this.y,INSTANTIATION_RADIUS_METEOR,Condition(function EnemyAliveFilter))
+      call GroupEnumUnitsInRange(TempGroup,this.x,this.y,WARP_RADIUS_METEOR,Condition(function EnemyAliveFilter))
       loop
         set target = FirstOfGroup(TempGroup)
         exitwhen target == null
-        call UnitDamageTarget(u, target, this.whichDemonType.instantiationDamage, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+        call UnitDamageTarget(u, target, this.whichDemonType.warpDamage, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
         call GroupRemoveUnit(TempGroup,target)
       endloop  
       set u = null
@@ -102,10 +102,10 @@ library DemonWarpMeteor requires Table, Event, T32, Filters, Math, Instance
       endloop
       set this.whichDemonType = DemonType.demonsByUnitId[GetUnitTypeId(FirstOfGroup(this.grp))]
 
-      if GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > this.whichDemonType.instantiationRange then
+      if GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > this.whichDemonType.warpRange then
         set ang = GetAngleBetweenPoints(casterX, casterY, x, y)
-        set this.x = GetPolarOffsetX(casterX, this.whichDemonType.instantiationRange, ang)
-        set this.y = GetPolarOffsetY(casterY, this.whichDemonType.instantiationRange, ang)
+        set this.x = GetPolarOffsetX(casterX, this.whichDemonType.warpRange, ang)
+        set this.y = GetPolarOffsetY(casterY, this.whichDemonType.warpRange, ang)
       else
         set this.x = x
         set this.y = y
@@ -120,7 +120,7 @@ library DemonWarpMeteor requires Table, Event, T32, Filters, Math, Instance
       exitwhen i == BlzGroupGetSize(this.grp)
         set u = BlzGroupUnitAt(this.grp, i)
         call SetUnitPosition(u, this.x, this.y)
-        call DestroyEffect(AddSpecialEffect(INSTANTIATION_EFFECT_METEOR, GetUnitX(u), GetUnitY(u)))    
+        call DestroyEffect(AddSpecialEffect(WARP_EFFECT_METEOR, GetUnitX(u), GetUnitY(u)))    
         call ShowUnit(u, false)
         call PauseUnit(u, true)  
         call SetUnitAnimation(u, "birth")

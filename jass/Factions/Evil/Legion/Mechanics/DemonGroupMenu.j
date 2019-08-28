@@ -23,7 +23,7 @@ library DemonGroupMenu initializer OnInit requires DemonGroup, Event, UnitType, 
 
         private constant string TOOLTIP_COLOR = "|cffffcc00"  
 
-        private constant integer INSTANTIATION_COST_BIG_THRESHOLD = 30  //Above this cost, Demon icons will display red text
+        private constant integer WARP_COST_BIG_THRESHOLD = 30  //Above this cost, Demon icons will display red text
     endglobals
 
     private function LoadToc takes string s returns nothing
@@ -124,12 +124,12 @@ library DemonGroupMenu initializer OnInit requires DemonGroup, Event, UnitType, 
         method updateTooltip takes nothing returns nothing
             local DemonType tempDemonType = this.whichDemonGroup.whichDemonType
 
-            if tempDemonType.instantiationType == INSTANTIATION_TYPE_NORMAL then
-                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Normal|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit is Warped directly beside the summoning portal.")
-            elseif tempDemonType.instantiationType == INSTANTIATION_TYPE_WARP then
-                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Dimensional|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.instantiationRange)) + ", fading in over a brief duration during which it cannot act but can be attacked.")
-            elseif tempDemonType.instantiationType == INSTANTIATION_TYPE_METEOR then
-                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Meteor|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.instantiationCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.instantiationRange)) + ", falling from the sky as a colossal meteor that deals " + I2S(R2I(tempDemonType.instantiationDamage)) + " damage upon impact.")
+            if tempDemonType.warpType == WARP_TYPE_NORMAL then
+                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Normal|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.warpCost)) + "|nThis unit is Warped directly beside the summoning portal.")
+            elseif tempDemonType.warpType == WARP_TYPE_DIMENSIONAL then
+                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Dimensional|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.warpCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.warpRange)) + ".")
+            elseif tempDemonType.warpType == WARP_TYPE_METEOR then
+                call BlzFrameSetText(this.tooltipTextFrame, TOOLTIP_COLOR+"Warp Type:|r Meteor|n" + TOOLTIP_COLOR + "Warp Cost: |r" + I2S(R2I(tempDemonType.warpCost)) + "|nThis unit can be Warped at a range of up to " + I2S(R2I(tempDemonType.warpRange)) + ", falling from the sky as a colossal meteor that deals " + I2S(R2I(tempDemonType.warpDamage)) + " damage upon impact.")
             endif
         endmethod
 
@@ -155,7 +155,7 @@ library DemonGroupMenu initializer OnInit requires DemonGroup, Event, UnitType, 
         endmethod
 
         private method setCount takes integer count returns nothing
-            if this.whichDemonGroup.whichDemonType.instantiationCost >= INSTANTIATION_COST_BIG_THRESHOLD then
+            if this.whichDemonGroup.whichDemonType.warpCost >= WARP_COST_BIG_THRESHOLD then
                 call BlzFrameSetText(this.countFrame, "|cffFF9A00" + I2S(count))
             else
                 call BlzFrameSetText(this.countFrame, I2S(count))
@@ -286,10 +286,10 @@ library DemonGroupMenu initializer OnInit requires DemonGroup, Event, UnitType, 
 
       //Create trigger to notice a DemonType changing in a way that is meaningful to the tooltip
       set trig = CreateTrigger()
-      call OnDemonTypeInstantiationRangeChange.register(trig)
-      call OnDemonTypeInstantiationCostChange.register(trig)
-      call OnDemonTypeInstantiationDamageChange.register(trig)
-      call OnDemonTypeInstantiationTypeChange.register(trig)        
+      call OnDemonTypeWarpRangeChange.register(trig)
+      call OnDemonTypeWarpCostChange.register(trig)
+      call OnDemonTypeWarpDamageChange.register(trig)
+      call OnDemonTypeWarpTypeChange.register(trig)        
       call TriggerAddCondition(trig, Condition(function OnDemonTypeStatChanged))   
 
       set trig = CreateTrigger()

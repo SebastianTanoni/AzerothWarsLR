@@ -2,7 +2,7 @@
 //The BurningLegionMenu system then sorts these Demons into a visual queue which determines the order in which they can leave Nether Portals.
 //It also handles Rematerialization behaviour since it requires the region used by DemonGroup. 
 
-library DemonGroup initializer OnInit requires Table, Event, DemonType, DemonInstantiationBarrier, Instance
+library DemonGroup initializer OnInit requires Table, Event, DemonType, DemonWarpBarrier, Instance
 
   globals
     Event OnDemonRegister
@@ -42,17 +42,17 @@ library DemonGroup initializer OnInit requires Table, Event, DemonType, DemonIns
       set thistype.first = this
     endmethod
 
-    method instantiate takes unit caster, real x, real y, integer limit returns boolean
-      local integer instantiationType = this.whichDemonType.instantiationType
+    method warp takes unit caster, real x, real y, integer limit returns boolean
+      local integer warpType = this.whichDemonType.warpType
       local integer i = 0
 
-      if not IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY) and GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > -1 and not IsPointInDemonInstantiationBarrier(x, y) then   //Will be -1 if there are no entrances to the instance
-        set instantiationType = this.whichDemonType.instantiationType
-        if instantiationType == INSTANTIATION_TYPE_NORMAL then
-          call Normal.create(caster, this, x, y, INSTANTIATION_DURATION_NORMAL, limit)
-        elseif instantiationType == INSTANTIATION_TYPE_WARP then
-          call Warp.create(caster, this, x, y, INSTANTIATION_DURATION_WARP, limit)
-        elseif instantiationType == INSTANTIATION_TYPE_METEOR then
+      if not IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY) and GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > -1 and not IsPointInDemonWarpBarrier(x, y) then   //Will be -1 if there are no entrances to the instance
+        set warpType = this.whichDemonType.warpType
+        if warpType == WARP_TYPE_NORMAL then
+          call Normal.create(caster, this, x, y, WARP_DURATION_NORMAL, limit)
+        elseif warpType == WARP_TYPE_DIMENSIONAL then
+          call Warp.create(caster, this, x, y, WARP_DURATION_DIMENSIONAL, limit)
+        elseif warpType == WARP_TYPE_METEOR then
           call Meteor.create(caster, this, x, y, limit)
         endif
         loop

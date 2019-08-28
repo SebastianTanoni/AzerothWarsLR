@@ -1,13 +1,13 @@
 library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
 
   globals
-    constant integer INSTANTIATION_TYPE_WARP = 1
-    constant string INSTANTIATION_EFFECT_WARP_AREA = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTo.mdl"
-    constant string INSTANTIATION_EFFECT_WARP_CASTER = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl"
-    constant string INSTANTIATION_EFFECT_WARP_TARGET = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl"    
-    constant real INSTANTIATION_RANGE_WARP = 3000.
-    constant real INSTANTIATION_DURATION_WARP = 2.
-    constant real INSTANTIATION_SCALE_WARP = 0.8    
+    constant integer WARP_TYPE_DIMENSIONAL = 1
+    constant string WARP_EFFECT_DIMENSIONAL_AREA = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTo.mdl"
+    constant string WARP_EFFECT_DIMENSIONAL_CASTER = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl"
+    constant string WARP_EFFECT_DIMENSIONAL_TARGET = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl"    
+    constant real WARP_RANGE_DIMENSIONAL = 3000.
+    constant real WARP_DURATION_DIMENSIONAL = 2.
+    constant real WARP_SCALE_DIMENSIONAL = 0.8    
   endglobals
 
   //A unit disappears, then a nice animation appears somewhere, then the unit appears at that animation
@@ -26,8 +26,8 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
       local integer i = 0
       local unit u = null
 
-      set tempSfx = AddSpecialEffect(INSTANTIATION_EFFECT_WARP_TARGET, this.x, this.y)
-      call BlzSetSpecialEffectScale(tempSfx, INSTANTIATION_SCALE_WARP)
+      set tempSfx = AddSpecialEffect(WARP_EFFECT_DIMENSIONAL_TARGET, this.x, this.y)
+      call BlzSetSpecialEffectScale(tempSfx, WARP_SCALE_DIMENSIONAL)
       call DestroyEffect(tempSfx)    
       set tempSfx = null
    
@@ -76,10 +76,10 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
       local integer i = 0
       local unit u = null
 
-      if GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > INSTANTIATION_RANGE_WARP then
+      if GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > WARP_RANGE_DIMENSIONAL then
         set ang = GetAngleBetweenPoints(casterX, casterY, x, y)
-        set this.x = GetPolarOffsetX(casterX, INSTANTIATION_RANGE_WARP, ang)
-        set this.y = GetPolarOffsetY(casterY, INSTANTIATION_RANGE_WARP, ang)
+        set this.x = GetPolarOffsetX(casterX, WARP_RANGE_DIMENSIONAL, ang)
+        set this.y = GetPolarOffsetY(casterY, WARP_RANGE_DIMENSIONAL, ang)
       else
         set this.x = x
         set this.y = y
@@ -109,8 +109,8 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
       set u = null
 
       //Persistent destination effect
-      set this.sfxA = AddSpecialEffect(INSTANTIATION_EFFECT_WARP_AREA, this.tarX, this.tarY)
-      call BlzSetSpecialEffectScale(this.sfxA, INSTANTIATION_SCALE_WARP)
+      set this.sfxA = AddSpecialEffect(WARP_EFFECT_DIMENSIONAL_AREA, this.tarX, this.tarY)
+      call BlzSetSpecialEffectScale(this.sfxA, WARP_SCALE_DIMENSIONAL)
 
       call this.startPeriodic()
 

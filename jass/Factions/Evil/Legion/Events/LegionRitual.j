@@ -73,22 +73,22 @@ library LegionRitual initializer OnInit requires T32, Math, Table, DemonTypeConf
 
       //Infernal 
       set tempDemonType = DemonType.demonsByUnitId['ninf']    
-      call tempDemonType.setInstantiationCost(INSTANTIATION_COST_NORMAL)
+      call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Nether Dragon
       set tempDemonType = DemonType.demonsByUnitId['n04U']
-      call tempDemonType.setInstantiationCost(INSTANTIATION_COST_NORMAL)
+      call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Fel Reaver
       set tempDemonType = DemonType.demonsByUnitId['u00K']
-      call tempDemonType.setInstantiationCost(INSTANTIATION_COST_NORMAL)
+      call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Doom Guard
       set tempDemonType = DemonType.demonsByUnitId['n04O']
-      call tempDemonType.setInstantiationCost(INSTANTIATION_COST_NORMAL)
+      call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Infernal Juggernaut
       set tempDemonType = DemonType.demonsByUnitId['n04L']
-      call tempDemonType.setInstantiationCost(INSTANTIATION_COST_NORMAL)
+      call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Felguard
       set tempDemonType = DemonType.demonsByUnitId['n04H']
-      call tempDemonType.setInstantiationCost(INSTANTIATION_COST_NORMAL)
+      call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Portal
       call CreateUnit(GetOwningPlayer(this.caster), 'h015', this.x, this.y, this.facing)
       //Archimonde

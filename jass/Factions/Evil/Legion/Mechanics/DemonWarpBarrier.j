@@ -1,8 +1,8 @@
 //A DemonInstantiationBarrier is a region that cannot be Instantiated in.
 
-library DemonInstantiationBarrier
+library DemonWarpBarrier
 
-  struct DemonInstantiationBarrier
+  struct DemonWarpBarrier
     readonly static integer barrierCount = 0
     readonly static thistype array barriersByIndex
     readonly static thistype array barriersById
@@ -23,18 +23,18 @@ library DemonInstantiationBarrier
         set thistype.barrierCount = thistype.barrierCount + 1
         return this 
       else
-        call BJDebugMsg("Attempted to create DemonInstantiationBarrier with already occupied ID " + I2S(id))      
+        call BJDebugMsg("Attempted to create DemonWarpBarrier with already occupied ID " + I2S(id))      
       endif
       return 0               
     endmethod     
   
   endstruct
 
-  function IsPointInDemonInstantiationBarrier takes real x, real y returns boolean
+  function IsPointInDemonWarpBarrier takes real x, real y returns boolean
     local integer i = 0
     loop
-    exitwhen i == DemonInstantiationBarrier.barrierCount
-      if DemonInstantiationBarrier.barriersByIndex[i].enabled and IsPointInRegion(DemonInstantiationBarrier.barriersByIndex[i].area, x, y) then
+    exitwhen i == DemonWarpBarrier.barrierCount
+      if DemonWarpBarrier.barriersByIndex[i].enabled and IsPointInRegion(DemonWarpBarrier.barriersByIndex[i].area, x, y) then
         return true
       endif
       set i = i + 1

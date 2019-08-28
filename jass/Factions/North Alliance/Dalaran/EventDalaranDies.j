@@ -1,9 +1,9 @@
 //When Dalaran is destroyed, remove its ability to damage Undead units and prevent DemonInstantiation.
 
-library EventDalaranDies initializer OnInit requires DemonInstantiationBarrierConfig
+library EventDalaranDies initializer OnInit requires DemonWarpBarrierConfig
 
   private function Dies takes nothing returns nothing
-    set DemonInstantiationBarrier.barriersByIndex[DEMON_INSTANTIATION_BARRIER_DALARAN].enabled = false
+    set DemonWarpBarrier.barriersByIndex[DEMON_WARP_BARRIER_DALARAN].enabled = false
 
     //call DisableTrigger( gg_trg_Dalaran_Generator_Aura )
     //call RemoveWeatherEffectBJ( udg_DalaranAura )

@@ -1,11 +1,9 @@
-library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTypeConfig, LegionConfig, Event, GeneralHelpers, DemonInstantiationBarrier
+library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTypeConfig, LegionConfig, Event, GeneralHelpers, DemonWarpBarrier
 
   globals
-    private constant real DISINTEREST_MULT = 1  
-    private constant integer MASS_INSTANTIATION_LIMIT = 12  //How many units can be Instantiated with a shift right-click
     Event OnDemonPortalDestroy
 
-    private constant integer INSTANTIATOR_ID = 'A09O'
+    private constant integer WARPER_ID = 'A09O'
   endglobals
 
   struct DemonPortal
@@ -31,23 +29,23 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       call this.deallocate()
     endmethod
 
-    method instantiate takes DemonGroup whichDemonGroup, real x, real y, integer limit returns boolean
+    method warp takes DemonGroup whichDemonGroup, real x, real y, integer limit returns boolean
       local DemonType tempDemonType = whichDemonGroup.whichDemonType
       local integer newLimit = 0      //How many units from this group can be summoned
       local real cost = 0
 
-      if not IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY) and GetDistanceBetweenPointsEx(GetUnitX(.u), GetUnitY(.u), x, y) > -1 and not IsPointInDemonInstantiationBarrier(x, y) then
-        if tempDemonType.instantiationCost == 0 then
+      if not IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY) and GetDistanceBetweenPointsEx(GetUnitX(.u), GetUnitY(.u), x, y) > -1 and not IsPointInDemonWarpBarrier(x, y) then
+        if tempDemonType.warpCost == 0 then
           set newLimit = limit
         else
-          set newLimit = IMinBJ ( R2I(mana / tempDemonType.instantiationCost), limit)
+          set newLimit = IMinBJ ( R2I(mana / tempDemonType.warpCost), limit)
         endif
-        if newLimit > 0 and tempDemonType.instantiationType == INSTANTIATION_TYPE_METEOR then
+        if newLimit > 0 and tempDemonType.warpType == WARP_TYPE_METEOR then
           set newLimit = 1
         endif
-        set cost = newLimit*tempDemonType.instantiationCost
+        set cost = newLimit*tempDemonType.warpCost
         if newLimit > 0 then
-          call whichDemonGroup.instantiate(this.u, x, y, newLimit)
+          call whichDemonGroup.warp(this.u, x, y, newLimit)
           call modMana(-cost)
         endif
       endif
@@ -83,7 +81,7 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       set this.handleId = GetHandleId(u)
       set thistype.demonPortalsByHandleId[this.handleId] = this
 
-      call UnitAddAbility(this.u, INSTANTIATOR_ID)
+      call UnitAddAbility(this.u, WARPER_ID)
       call GroupAddUnit(thistype.demonPortals, u)
       call UnitAddAbility(u, 'ARal')
       
@@ -111,7 +109,7 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       if DemonGroup.first.getSize() != 0 then
         set x = GetOrderPointX()
         set y = GetOrderPointY()
-        call tempDemonPortal.instantiate(DemonGroup.first, x, y, 1)
+        call tempDemonPortal.warp(DemonGroup.first, x, y, 1)
       endif
     endif
   endfunction
@@ -132,7 +130,7 @@ library DemonPortal initializer OnInit requires DemonGroup, Table, DemonPortalTy
       if DemonGroup.first.getSize() != 0 then
         set x = GetUnitX(GetOrderTargetUnit())
         set y = GetUnitY(GetOrderTargetUnit())
-        call tempDemonPortal.instantiate(DemonGroup.first, x, y, 1) 
+        call tempDemonPortal.warp(DemonGroup.first, x, y, 1) 
       endif
     endif
   endfunction    

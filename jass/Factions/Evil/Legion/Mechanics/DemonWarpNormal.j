@@ -1,10 +1,10 @@
 library DemonWarpNormal requires Table, Event, T32, Filters, Math, Instance
 
   globals
-    constant integer INSTANTIATION_TYPE_NORMAL = 0
-    constant string INSTANTIATION_EFFECT_NORMAL = "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl"
-    constant real INSTANTIATION_RANGE_NORMAL = 200.
-    constant real INSTANTIATION_DURATION_NORMAL = 0.5
+    constant integer WARP_TYPE_NORMAL = 0
+    constant string WARP_EFFECT_NORMAL = "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl"
+    constant real WARP_RANGE_NORMAL = 200.
+    constant real WARP_DURATION_NORMAL = 0.5
   endglobals
 
   struct Normal //The animation that plays out to bring a normal Demon into the world
@@ -28,10 +28,10 @@ library DemonWarpNormal requires Table, Event, T32, Filters, Math, Instance
       local unit u = null
       local integer i = 0
 
-      if GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > INSTANTIATION_RANGE_NORMAL then
+      if GetDistanceBetweenPointsEx(GetUnitX(caster), GetUnitY(caster), x, y) > WARP_RANGE_NORMAL then
         set ang = GetAngleBetweenPoints(casterX, casterY, x, y)
-        set this.x = GetPolarOffsetX(casterX, INSTANTIATION_RANGE_NORMAL, ang)
-        set this.y = GetPolarOffsetY(casterY, INSTANTIATION_RANGE_NORMAL, ang)
+        set this.x = GetPolarOffsetX(casterX, WARP_RANGE_NORMAL, ang)
+        set this.y = GetPolarOffsetY(casterY, WARP_RANGE_NORMAL, ang)
       else
         set this.x = x
         set this.y = y
@@ -59,7 +59,7 @@ library DemonWarpNormal requires Table, Event, T32, Filters, Math, Instance
       endloop
       set u = null
     
-      call DestroyEffect(AddSpecialEffect(INSTANTIATION_EFFECT_NORMAL, GetUnitX(FirstOfGroup(this.grp)), GetUnitY(FirstOfGroup(this.grp))))   
+      call DestroyEffect(AddSpecialEffect(WARP_EFFECT_NORMAL, GetUnitX(FirstOfGroup(this.grp)), GetUnitY(FirstOfGroup(this.grp))))   
 
       call this.destroy()
       
