@@ -1,4 +1,4 @@
-library BuildOrgrimmar initializer OnInit
+library BuildOrgrimmar initializer OnInit requires WarsongConfig, FrostwolfConfig
 
   globals
     private constant real ORGRIMMAR_TIMER = 600.     //How long it takes for Orgrimmar to be built instantly
@@ -15,11 +15,11 @@ library BuildOrgrimmar initializer OnInit
     local Person tempPerson = 0
     local player recipient = Player(PLAYER_NEUTRAL_AGGRESSIVE)
 
-    if PersonsByFaction[7] != 0 then                        //Frostwolf
-      set tempPerson = PersonsByFaction[7]
+    if PersonsByFaction[FACTION_FROSTWOLF] != 0 then                 
+      set tempPerson = PersonsByFaction[FACTION_FROSTWOLF]
       set recipient = tempPerson.getPlayer()          
-    elseif PersonsByFaction[8] != 0 then                    //Warsong
-      set tempPerson = PersonsByFaction[8]
+    elseif PersonsByFaction[FACTION_WARSONG] != 0 then
+      set tempPerson = PersonsByFaction[FACTION_WARSONG]
       set recipient = tempPerson.getPlayer()                     
     endif
 

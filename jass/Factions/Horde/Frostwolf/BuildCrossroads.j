@@ -1,4 +1,4 @@
-library BuildCrossroads initializer OnInit
+library BuildCrossroads initializer OnInit requires WarsongConfig, FrostwolfConfig
 
   globals
     private constant real TIMER = 420.     //How long it takes for this event to elapse automatically
@@ -13,11 +13,11 @@ library BuildCrossroads initializer OnInit
     local Person tempPerson = 0
     local player recipient = Player(PLAYER_NEUTRAL_AGGRESSIVE)
 
-    if PersonsByFaction[7] != 0 then                        //Frostwolf
-      set tempPerson = PersonsByFaction[7]
+    if PersonsByFaction[FACTION_FROSTWOLF] != 0 then                    
+      set tempPerson = PersonsByFaction[FACTION_FROSTWOLF]
       set recipient = tempPerson.getPlayer()
-    elseif PersonsByFaction[8] != 0 then                    //Warsong
-      set tempPerson = PersonsByFaction[8]
+    elseif PersonsByFaction[FACTION_WARSONG] != 0 then                    //Warsong
+      set tempPerson = PersonsByFaction[FACTION_WARSONG]
       set recipient = tempPerson.getPlayer()                               
     endif
 

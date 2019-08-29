@@ -1,4 +1,4 @@
-library BuildWarsongCamp initializer OnInit
+library BuildWarsongCamp initializer OnInit requires WarsongConfig, FrostwolfConfig
 
   globals
     private constant real TIMER = 270.     //How long it takes for Warsong Lumber Camp to be built instantly
@@ -13,11 +13,11 @@ library BuildWarsongCamp initializer OnInit
     local Person tempPerson = 0
     local player recipient = Player(PLAYER_NEUTRAL_AGGRESSIVE)
 
-    if PersonsByFaction[8] != 0 then                    //Warsong
+    if PersonsByFaction[FACTION_WARSONG] != 0 then                    //Warsong
       set tempPerson = PersonsByFaction[8]
       set recipient = tempPerson.getPlayer()     
-    elseif PersonsByFaction[7] != 0 then                        //Frostwolf
-      set tempPerson = PersonsByFaction[7]
+    elseif PersonsByFaction[FACTION_FROSTWOLF] != 0 then                        //Frostwolf
+      set tempPerson = PersonsByFaction[FACTION_FROSTWOLF]
       set recipient = tempPerson.getPlayer()                       
     endif
 
