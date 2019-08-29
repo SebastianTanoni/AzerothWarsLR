@@ -60,6 +60,7 @@ library LegionRitual initializer OnInit requires T32, Math, Table, DemonTypeConf
       local string name = null
       local unit tempUnit = null
       local integer i = 0
+      local Person legion = PersonsByFaction[FACTION_LEGION]
       set tempSfx = AddSpecialEffect(EFFECT_FINISH, this.x, this.y)
       call BlzSetSpecialEffectScale(tempSfx, EFFECT_SCALE_FINISH)
       call BlzSetSpecialEffectPosition(tempSfx, 100000, 100000,0)
@@ -90,13 +91,13 @@ library LegionRitual initializer OnInit requires T32, Math, Table, DemonTypeConf
       set tempDemonType = DemonType.demonsByUnitId['n04H']
       call tempDemonType.setWarpCost(WARP_COST_NORMAL)
       //Portal
-      call CreateUnit(GetOwningPlayer(this.caster), 'h015', this.x, this.y, this.facing)
+      call CreateUnit(legion.p, 'h015', this.x, this.y, this.facing)
       //Archimonde
-      set tempUnit = CreateUnit(GetOwningPlayer(this.caster), 'Uwar', this.x, this.y, this.facing)
+      set tempUnit = CreateUnit(legion.p, 'Uwar', this.x, this.y, this.facing)
       call UnitDetermineLevel(tempUnit, 1.3)
       call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl", GetUnitX(tempUnit), GetUnitY(tempUnit)))
       //Azgalor
-      set tempUnit = CreateUnit(GetOwningPlayer(this.caster), 'Npld', this.x, this.y, this.facing)
+      set tempUnit = CreateUnit(legion.p, 'Npld', this.x, this.y, this.facing)
       call UnitDetermineLevel(tempUnit, 1.1)
       call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl", GetUnitX(tempUnit), GetUnitY(tempUnit)))
 
