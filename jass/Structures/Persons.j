@@ -381,8 +381,8 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
       local integer heroCount = 0
 
       loop
-      exitwhen i == this.team.size
-        if this.p != this.team.playerArray[i] then
+      exitwhen i == MAX_PLAYERS
+        if this.p != this.team.playerArray[i] and this.team.playerArray[i] != null then
           //Identify all heroes for a given ally
           call GroupEnumUnitsOfPlayer(tempGroup, this.team.playerArray[i], function IsUnitHeroEnum)
           set heroCount = BlzGroupGetSize(tempGroup)
@@ -411,9 +411,11 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
       call ForceRemovePlayer(eligiblePlayers, this.p)
 
       loop
-      exitwhen i == this.team.size
-        call SetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_GOLD) + gold/(this.team.size-1))
-        call SetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_LUMBER) + lumber/(this.team.size-1))
+      exitwhen i == MAX_PLAYERS
+        if this.team.playerArray[i] != null then
+          call SetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_GOLD) + gold/(this.team.size-1))
+          call SetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(this.team.playerArray[i], PLAYER_STATE_RESOURCE_LUMBER) + lumber/(this.team.size-1))
+        endif
         set i = i + 1
       endloop
       
