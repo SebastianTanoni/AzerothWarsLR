@@ -1,4 +1,4 @@
-library MasterVoid requires Persons, LegionMasteryConfig, DemonType, DemonTypeConfig
+library MasteryVoid requires Persons, LegionMasteryConfig, DemonType, DemonTypeConfig
 
     //Increases the Rematerialization chance of Voidwalkers, Nether Drakes and Nether Dragons to 30%.
     //Increases the hit points of Voidwalkers by 150.
