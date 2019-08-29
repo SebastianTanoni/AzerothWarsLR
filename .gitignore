@@ -2,3 +2,4 @@ sourceMaps/*
 compiledMaps/*
 backups/*
 logs/*
+buildTools/ButtonManager/destination/*
