@@ -82,14 +82,14 @@ library DemonGroup initializer OnInit requires Table, Event, DemonType, DemonWar
       set thistype.demonGroupsByUnitType = Table.create()
       set thistype.demonGroupsByDemonType = Table.create()
     endmethod
-endstruct
+  endstruct
 
   private function RegisterDemon takes unit u returns nothing
     local integer unitId = GetUnitTypeId(u)
     local DemonGroup tempDemonGroup = 0
 
     if DemonGroup.demonGroupsByUnitType[unitId] == 0 then
-        return
+      return
     endif    
 
     set tempDemonGroup = DemonGroup.demonGroupsByUnitType[unitId]
@@ -103,12 +103,12 @@ endstruct
     set tempDemonGroup = DemonGroup.demonGroupsByUnitType[unitId]
 
     if tempDemonGroup != 0 then
-        call tempDemonGroup.remove(u)    
+      call tempDemonGroup.remove(u)    
     endif    
   endfunction
 
   function GetTriggerDemonGroup takes nothing returns DemonGroup
-      return DemonGroup.triggerDemonGroup
+    return DemonGroup.triggerDemonGroup
   endfunction
 
   private function MassRegister takes nothing returns nothing
@@ -125,7 +125,7 @@ endstruct
     call DestroyGroup(tempGroup)
     set tempGroup = null
     set tempUnit = null
-endfunction
+  endfunction
 
   private function LeavesRegion takes nothing returns nothing
     call UnregisterDemon(GetTriggerUnit())
@@ -152,9 +152,9 @@ endfunction
         call RemoveUnit(triggerUnit)
       //THIS SHOULD PROBABLY BE IN DEMONTYPE NOT DEMONGROUP
       elseif tempDemonType.rematerializeChance > 0 and GetOwningPlayer(triggerUnit) == legion.getPlayer() then
-          if GetRandomReal(0, 1) <= tempDemonType.rematerializeChance then
-            call Rematerialize.create(triggerUnit, GetRectCenterX(TWISTING_NETHER_RECT), GetRectCenterY(TWISTING_NETHER_RECT), 1)
-          endif
+        if GetRandomReal(0, 1) <= tempDemonType.rematerializeChance then
+          call Rematerialize.create(triggerUnit, GetRectCenterX(TWISTING_NETHER_RECT), GetRectCenterY(TWISTING_NETHER_RECT), 1)
+        endif
       endif
     endif
     set triggerUnit = null
