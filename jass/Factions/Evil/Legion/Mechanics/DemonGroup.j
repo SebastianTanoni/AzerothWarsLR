@@ -26,7 +26,7 @@ library DemonGroup initializer OnInit requires Table, Event, DemonType, DemonWar
       return BlzGroupGetSize(this.demons)
     endmethod
 
-      method remove takes unit u returns nothing
+    method remove takes unit u returns nothing
       call GroupRemoveUnit(this.demons, u)
       set thistype.triggerDemonGroup = this
       call OnDemonGroupSizeChange.fire()
