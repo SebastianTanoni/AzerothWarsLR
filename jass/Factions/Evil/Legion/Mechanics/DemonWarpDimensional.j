@@ -52,10 +52,7 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
     endmethod
 
     method periodic takes nothing returns nothing     
-      local integer i = 0       
-      local unit u = null
-      set this.tick = this.tick+1   
-
+      set this.tick = this.tick+1
       if this.tick == this.dur then
         call DestroyEffect(this.sfxA)
         call this.destroy()
