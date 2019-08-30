@@ -23,7 +23,10 @@ library BuildCrossroads initializer OnInit requires Persons, WarsongConfig, Fros
       set recipient = tempPerson.p  
     elseif PersonsByFaction[FACTION_TRUE_HORDE] != 0 then
       set tempPerson = PersonsByFaction[FACTION_TRUE_HORDE]
-      set recipient = tempPerson.p            
+      set recipient = tempPerson.p        
+    elseif PersonsByFaction[FACTION_NEW_HORDE] != 0 then
+      set tempPerson = PersonsByFaction[FACTION_NEW_HORDE]
+      set recipient = tempPerson.p          
     endif
 
     //Transfer all Neutral Passive units in Crossroads to one of the above factions

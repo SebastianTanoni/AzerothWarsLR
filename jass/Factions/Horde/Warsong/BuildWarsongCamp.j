@@ -21,12 +21,12 @@ library BuildWarsongCamp initializer OnInit requires Persons, WarsongConfig, Fro
     elseif PersonsByFaction[FACTION_FROSTWOLF] != 0 then                   
       set tempPerson = PersonsByFaction[FACTION_FROSTWOLF]
       set recipient = tempPerson.p      
-    elseif PersonsByFaction[FACTION_NEW_HORDE] != 0 then
-      set tempPerson = PersonsByFaction[FACTION_NEW_HORDE]
-      set recipient = tempPerson.p      
     elseif PersonsByFaction[FACTION_TRUE_HORDE] != 0 then
       set tempPerson = PersonsByFaction[FACTION_TRUE_HORDE]
-      set recipient = tempPerson.p        
+      set recipient = tempPerson.p     
+    elseif PersonsByFaction[FACTION_NEW_HORDE] != 0 then
+      set tempPerson = PersonsByFaction[FACTION_NEW_HORDE]
+      set recipient = tempPerson.p         
     endif
 
     //Transfer all Neutral Passive units in Orgrimmar to one of the above factions

@@ -5,6 +5,7 @@ library WarsongConfig initializer OnInit requires Faction
 
   private function OnInit takes nothing returns nothing
     local Faction f = Faction.create(FACTION_WARSONG,"Warsong", PLAYER_COLOR_ORANGE, "|c00ff8000","ReplaceableTextures\\CommandButtons\\BTNHellScream.blp")
+      call f.setAbsenceResearch('R04V')
       call f.registerObjectLimit('ogre', UNLIMITED)   //Great Hall
       call f.registerObjectLimit('ostr', UNLIMITED)   //Stronghold
       call f.registerObjectLimit('ofrt', UNLIMITED)   //Fortress

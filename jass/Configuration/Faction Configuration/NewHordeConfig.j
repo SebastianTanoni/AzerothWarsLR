@@ -5,7 +5,7 @@ library NewHordeConfig initializer OnInit requires Faction
   endglobals
 
   private function OnInit takes nothing returns nothing
-    local Faction f = Faction.create(FACTION_NEW_HORDE,"New Horde", PLAYER_COLOR_RED, "|c00ff0303","ReplaceableTextures\\CommandButtons\\BTNThrall.blp")
+    local Faction f = Faction.create(FACTION_NEW_HORDE,"New Horde", PLAYER_COLOR_RED, "|c00ff0303","ReplaceableTextures\\CommandButtons\\BTNThrallNew.blp")
       call f.registerObjectLimit('ogre', UNLIMITED)   //Great Hall
       call f.registerObjectLimit('ostr', UNLIMITED)   //Stronghold
       call f.registerObjectLimit('ofrt', UNLIMITED)   //Fortress

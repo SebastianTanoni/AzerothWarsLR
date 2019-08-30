@@ -23,6 +23,9 @@ library Build initializer OnInit requires Persons, WarsongConfig, FrostwolfConfi
     elseif PersonsByFaction[FACTION_WARSONG] != 0 then
       set tempPerson = PersonsByFaction[FACTION_WARSONG]
       set recipient = tempPerson.p
+    elseif PersonsByFaction[FACTION_NEW_HORDE] != 0 then
+      set tempPerson = PersonsByFaction[FACTION_NEW_HORDE]
+      set recipient = tempPerson.p      
     elseif PersonsByFaction[FACTION_TRUE_HORDE] != 0 then
       set tempPerson = PersonsByFaction[FACTION_TRUE_HORDE]
       set recipient = tempPerson.p  
