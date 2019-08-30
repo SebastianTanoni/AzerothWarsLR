@@ -23,7 +23,6 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
 
     method destroy takes nothing returns nothing
       local effect tempSfx = null
-      local integer i = 0
       local unit u = null
 
       set tempSfx = AddSpecialEffect(WARP_EFFECT_DIMENSIONAL_TARGET, this.x, this.y)
@@ -31,7 +30,6 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
       call DestroyEffect(tempSfx)    
       set tempSfx = null
    
-      set i = 0
       loop
         set u = FirstOfGroup(this.grp)
         exitwhen u == null
@@ -41,7 +39,6 @@ library DemonWarpDimensional requires Table, Event, T32, Filters, Math, Instance
         if GetDistanceBetweenPointsEx(this.x, this.y, this.tarX, this.tarY) > 50 then
           call IssuePointOrder(u, "attack", this.tarX, this.tarY)
         endif
-        set i = i + 1
         call GroupRemoveUnit(this.grp, u)
       endloop 
 
