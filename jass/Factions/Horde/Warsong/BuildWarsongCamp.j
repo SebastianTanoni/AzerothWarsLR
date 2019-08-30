@@ -1,10 +1,10 @@
-library BuildWarsongCamp initializer OnInit requires WarsongConfig, FrostwolfConfig
+//If Grom enters the Warsong Camp area, OR a time elapses, OR someone becomes a solo Horde Path, give the Camp to a Horde player.
+
+library BuildWarsongCamp initializer OnInit requires Persons, WarsongConfig, FrostwolfConfig, NewHordeConfig, TrueHordeConfig
 
   globals
     private constant real TIMER = 270.     //How long it takes for Warsong Lumber Camp to be built instantly
-
-    private trigger TriggerEntersRegion = null
-    private trigger TriggerTimer = null
+    private boolean Built = false
   endglobals
 
   private function Build takes nothing returns nothing
@@ -13,12 +13,20 @@ library BuildWarsongCamp initializer OnInit requires WarsongConfig, FrostwolfCon
     local Person tempPerson = 0
     local player recipient = Player(PLAYER_NEUTRAL_AGGRESSIVE)
 
-    if PersonsByFaction[FACTION_WARSONG] != 0 then                    //Warsong
-      set tempPerson = PersonsByFaction[8]
-      set recipient = tempPerson.getPlayer()     
-    elseif PersonsByFaction[FACTION_FROSTWOLF] != 0 then                        //Frostwolf
+    set Built = true
+
+    if PersonsByFaction[FACTION_WARSONG] != 0 then              
+      set tempPerson = PersonsByFaction[FACTION_WARSONG]
+      set recipient = tempPerson.p  
+    elseif PersonsByFaction[FACTION_FROSTWOLF] != 0 then                   
       set tempPerson = PersonsByFaction[FACTION_FROSTWOLF]
-      set recipient = tempPerson.getPlayer()                       
+      set recipient = tempPerson.p      
+    elseif PersonsByFaction[FACTION_NEW_HORDE] != 0 then
+      set tempPerson = PersonsByFaction[FACTION_NEW_HORDE]
+      set recipient = tempPerson.p      
+    elseif PersonsByFaction[FACTION_TRUE_HORDE] != 0 then
+      set tempPerson = PersonsByFaction[FACTION_TRUE_HORDE]
+      set recipient = tempPerson.p        
     endif
 
     //Transfer all Neutral Passive units in Orgrimmar to one of the above factions
@@ -38,14 +46,8 @@ library BuildWarsongCamp initializer OnInit requires WarsongConfig, FrostwolfCon
 
     //Cleanup
     call DestroyGroup (TempGroup)
-    call DestroyTrigger(TriggerEntersRegion)      
-    call DestroyTrigger(TriggerTimer)  
     set recipient = null
     set tempGroup = null
-  endfunction
-
-  private function TimerEnds takes nothing returns nothing
-    call Build()
   endfunction
 
   private function EntersRegion takes nothing returns nothing
@@ -54,14 +56,33 @@ library BuildWarsongCamp initializer OnInit requires WarsongConfig, FrostwolfCon
     endif
   endfunction    
 
-  private function OnInit takes nothing returns nothing
-    set TriggerEntersRegion = CreateTrigger()
-    call TriggerRegisterEnterRectSimple(TriggerEntersRegion, gg_rct_WarsongCamp)
-    call TriggerAddCondition(TriggerEntersRegion, Condition(function EntersRegion))
+  private function PersonFactionChanges takes nothing returns nothing
+    if GetTriggerPerson().faction.id == FACTION_NEW_HORDE or GetTriggerPerson().faction.id == FACTION_TRUE_HORDE then
+      call Build()
+    endif
+  endfunction
 
-    set TriggerTimer = CreateTrigger()
-    call TriggerRegisterTimerEvent(TriggerTimer, TIMER, false)
-    call TriggerAddCondition(TriggerTimer, Condition(function TimerEnds))        
+  private function Conditions takes nothing returns boolean
+    return not Built
+  endfunction
+
+  private function OnInit takes nothing returns nothing
+    local trigger trig = null
+
+    set trig = CreateTrigger()
+    call TriggerRegisterEnterRectSimple(trig, gg_rct_WarsongCamp)
+    call TriggerAddCondition(trig, Condition(function Conditions))
+    call TriggerAddAction(trig, function EntersRegion)
+
+    set trig = CreateTrigger()
+    call TriggerRegisterTimerEvent(trig, TIMER, false)
+    call TriggerAddCondition(trig, Condition(function Conditions))
+    call TriggerAddAction(trig, function Build)    
+
+    set trig = CreateTrigger()
+    call OnPersonFactionChange.register(trig)
+    call TriggerAddCondition(trig, Condition(function Conditions))
+    call TriggerAddAction(trig, function PersonFactionChanges)
   endfunction
 
 endlibrary

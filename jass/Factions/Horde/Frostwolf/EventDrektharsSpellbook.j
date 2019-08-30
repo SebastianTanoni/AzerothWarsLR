@@ -13,7 +13,7 @@ library EventDrektharsSpellbook initializer OnInit requires Artifact
   private function OnInit takes nothing returns nothing
     local trigger trig = CreateTrigger()
     call TriggerRegisterEnterRectSimple( trig, gg_rct_Drekthars_Spellbook )
-    call TriggerAddCondition( trig, Condition( function EntersRegion ) )
+    call TriggerAddCondition( trig, function EntersRegion)
   endfunction
 
 endlibrary
