@@ -1,3 +1,0 @@
-Faction = {
-  name = ""
-}
