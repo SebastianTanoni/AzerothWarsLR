@@ -5,16 +5,16 @@ library PlayerLeaves initializer OnInit requires Persons
     local integer pId = GetPlayerId(p)
     //call PlaySoundBJ( gg_snd_Warning )
 
-    if Persons[pId].getFaction() != 0 then
-      call BJDebugMsg( Persons[pId].getFaction().getName() + " has left the game." )
+    if Persons[pId].faction != 0 then
+      call BJDebugMsg( Persons[pId].faction.name + " has left the game." )
     else
       call BJDebugMsg( GetPlayerName(p) + " has left the game." )        
     endif
 
     if Persons[pId] != 0 then
       call Persons[pId].leave()
-      call Persons[pId].setTeam(-1)
       call Persons[pId].setFaction(-1)
+      call Persons[pId].setTeam(-1)
     endif
   endfunction
 
