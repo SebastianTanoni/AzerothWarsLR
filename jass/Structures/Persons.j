@@ -472,9 +472,9 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
 
     //This should get used any time a player exits the game without being defeated; IE they left, went afk, became an observer, or triggered an event that causes this
     method leave takes nothing returns nothing
-      if this.team.size > 0 then
+      if this.team.size > 1 then
         call this.distributeUnits()
-        call this.distributeResources() 
+        call this.distributeResources()
         call this.distributeExperience()
       else
         call this.obliterate()

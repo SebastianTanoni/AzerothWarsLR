@@ -3,7 +3,6 @@ library PlayerLeaves initializer OnInit requires Persons
   private function PlayerLeaves takes nothing returns nothing
     local player p = GetTriggerPlayer()
     local integer pId = GetPlayerId(p)
-    //call PlaySoundBJ( gg_snd_Warning )
 
     if Persons[pId].faction != 0 then
       call BJDebugMsg( Persons[pId].faction.name + " has left the game." )
