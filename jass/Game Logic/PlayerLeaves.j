@@ -23,7 +23,7 @@ library PlayerLeaves initializer OnInit requires Persons
     local trigger trig = CreateTrigger(  )
     local integer i = 0
     loop
-    exitwhen i > 24
+    exitwhen i > MAX_PLAYERS
       call TriggerRegisterPlayerEvent(trig, Player(i), EVENT_PLAYER_LEAVE)
       set i = i + 1
     endloop
