@@ -5,6 +5,7 @@ library MasteryFelsteel initializer OnInit requires Persons, LegionMasteryConfig
     endglobals
 
     private function Research takes nothing returns nothing
+        local DemonType tempDemonType = 0
         local Person tempPerson = 0
         if GetResearched() == RESEARCH_ID then
             set tempPerson = Persons[GetPlayerId(GetTriggerPlayer())]
