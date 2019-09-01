@@ -51,13 +51,13 @@ library ControlPoint initializer OnInit requires AIDS, Persons, Event
       set person = Persons[GetPlayerId(this.owner)]
       
       if person != 0 then
-          call person.modIncome(this.value)
-          call person.modControlPoints(1)
-          call GroupAddUnit(person.getcpGroup(), this.u)
-        endif
+        call person.modIncome(this.value)
+        call person.modControlPoints(1)
+        call GroupAddUnit(person.getcpGroup(), this.u)
+      endif
 
-        set thistype.triggerControlPoint = this
-        call OnControlPointOwnerChange.fire()
+      set thistype.triggerControlPoint = this
+      call OnControlPointOwnerChange.fire()
     endmethod
     
     static method initializeCP takes nothing returns nothing
