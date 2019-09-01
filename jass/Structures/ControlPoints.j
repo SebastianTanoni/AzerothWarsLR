@@ -16,7 +16,8 @@ library ControlPoint initializer OnInit requires AIDS, Persons, Event
     private constant real       CP_VALUE_E = 30
     private constant real       CP_VALUE_F = 50
 
-    Event OnControlPointOwnerChange
+    Event OnControlPointLoss    
+    Event OnControlPointOwnerChange    
   endglobals
   //*ENDCONFIG*
 
@@ -47,6 +48,9 @@ library ControlPoint initializer OnInit requires AIDS, Persons, Event
         call GroupRemoveUnit(person.getcpGroup(), this.u)
       endif
   
+      set thistype.triggerControlPoint = this
+      call OnControlPointLoss.fire()
+
       set this.owner = p
       set person = Persons[GetPlayerId(this.owner)]
       
@@ -151,6 +155,7 @@ library ControlPoint initializer OnInit requires AIDS, Persons, Event
     call TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_CHANGE_OWNER)
     call TriggerAddCondition(trig, Condition(function CPChangesOwner))
     
+    set OnControlPointLoss = Event.create()
     set OnControlPointOwnerChange = Event.create()
 
     call TriggerSleepAction(1)

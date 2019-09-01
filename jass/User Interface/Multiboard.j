@@ -404,6 +404,7 @@ library Multiboard initializer OnInit requires Faction, Team, Event, Table
     call TriggerAddAction(trig, function OnPersonFactionChanged)
 
     set trig = CreateTrigger()
+    call OnControlPointLoss.register(trig)
     call OnControlPointOwnerChange.register(trig)
     call TriggerAddAction(trig, function OnControlPointOwnerChanged)
 
