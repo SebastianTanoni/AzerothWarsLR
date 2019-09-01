@@ -1,8 +1,8 @@
 library TestSafety initializer OnInit
     
     globals
-      private constant boolean IS_TEST_VERSION = true  //Change this to false for live release
-      boolean AreCheatsActive = true
+      private constant boolean IS_TEST_VERSION = false  //Change this to false for live release
+      boolean AreCheatsActive
       private boolean IsAdminPresent
     endglobals
 
@@ -25,7 +25,7 @@ library TestSafety initializer OnInit
       set i = 0
       loop
       exitwhen i == MAX_PLAYERS or IsAdminPresent == true
-        if GetPlayerName(Player(i)) == "krur" or GetPlayerName(Player(i)) == "YakaryBovine" or GetPlayerName(Player(i)) == "Talinn" or GetPlayerName(Player(i)) == "lordsebas" or GetPlayerName(Player(i)) == "WorldEdit" then
+        if GetPlayerName(Player(i)) == "krur" or GetPlayerName(Player(i)) == "YakaryBovine" or GetPlayerName(Player(i)) == "lordsebas" or GetPlayerName(Player(i)) == "WorldEdit" then
           set IsAdminPresent = true
         endif
         set i = i + 1
