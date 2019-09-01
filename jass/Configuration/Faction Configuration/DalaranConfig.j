@@ -1,5 +1,3 @@
-
-
 library DalaranConfig initializer OnInit requires Faction
 
   globals
