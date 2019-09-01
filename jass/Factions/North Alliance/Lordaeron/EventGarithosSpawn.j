@@ -47,9 +47,9 @@ library EventGarithosSpawn initializer OnInit requires EventArthasExpedition
   endfunction
 
   private function Dies takes nothing returns nothing
-    local Person scourge = PersonsByFaction[FACTION_LORDAERON]
+    local Person lordaeron = PersonsByFaction[FACTION_LORDAERON]
     if not IsUnitAliveBJ(gg_unit_h000_0406) and not IsUnitAliveBJ(gg_unit_h01G_0885) and not IsUnitAliveBJ(gg_unit_h030_0839) then
-      if scourge != 0 then
+      if lordaeron != 0 then
         call GarithosSpawn()
       endif
       call DoArthasExpedition()
