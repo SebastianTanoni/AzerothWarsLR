@@ -51,11 +51,6 @@ library TestSafety initializer OnInit
         set trig = CreateTrigger()
         call TriggerRegisterTimerEvent(trig, 200., true)
         call TriggerAddCondition(trig, Condition(function Warning))
-      else
-        loop
-        exitwhen i == MAX_PLAYERS
-          call CustomDefeatBJ(Player(i), "This is a test version only")
-        endloop
       endif
     endfunction    
 endlibrary
