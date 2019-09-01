@@ -6,7 +6,6 @@ library TestSafety initializer OnInit
 
     globals
       boolean AreCheatsActive = true
-      private boolean IsAdminPresent
     endglobals
 
     private function Warning takes nothing returns nothing
@@ -22,17 +21,6 @@ library TestSafety initializer OnInit
       local trigger trig = null
       local integer i = 0
       local integer userCount = 0
-
-      set IsAdminPresent = not IS_TEST_VERSION
-
-      set i = 0
-      loop
-      exitwhen i == MAX_PLAYERS or IsAdminPresent == true
-        if GetPlayerName(Player(i)) == "krur" or GetPlayerName(Player(i)) == "YakaryBovine" or GetPlayerName(Player(i)) == "lordsebas" or GetPlayerName(Player(i)) == "WorldEdit" then
-          set IsAdminPresent = true
-        endif
-        set i = i + 1
-      endloop
       
       set i = 0
       loop
