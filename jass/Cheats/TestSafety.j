@@ -2,7 +2,10 @@ library TestSafety initializer OnInit
     
     globals
       private constant boolean IS_TEST_VERSION = false  //Change this to false for live release
-      boolean AreCheatsActive
+    endglobals
+
+    globals
+      boolean AreCheatsActive = true
       private boolean IsAdminPresent
     endglobals
 
