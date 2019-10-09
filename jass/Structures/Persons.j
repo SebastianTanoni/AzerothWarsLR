@@ -36,83 +36,7 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
      
     private real partialGold = 0              //Just used for income calculations
     private group cpGroup                     //Group of control points this person owns  
-    private integer factionModCount = 0       //
-
-    //MMD scoring information
-/*     readonly Team startingTeam = 0
-    readonly Team startingEnemyTeam = 0
-    readonly group startingEnemyCapitals = null
-    readonly group startingCapitals = null
-    readonly group capitals = null
-    readonly real score = 0
-    readonly boolean earlyGameFinished = false
-    readonly boolean lateGameFinished = false
-    
-    //MMD scoring methods
-    method finishLateGame takes nothing returns nothing
-      set this.lateGameFinished = true
-    endmethod
-
-    method finishEarlyGame takes nothing returns nothing
-      set this.earlyGameFinished = true
-    endmethod
-
-    method addScore takes real score, boolean send returns nothing
-      set this.score = score
-      if send then
-        call MMD_UpdateValueInt("score", this.p, MMD_OP_ADD, R2I(this.score))
-      endif
-    endmethod
-
-    method removeStartingEnemyCapital takes unit u returns nothing
-      call GroupAddUnit(this.startingEnemyCapitals, u)
-    endmethod
-
-    method addStartingEnemyCapital takes unit u returns nothing
-      call GroupRemoveUnit(this.startingEnemyCapitals, u)
-    endmethod
-
-    method removeCapital takes unit u returns nothing
-      call GroupRemoveUnit(this.capitals, u)
-      call GroupRemoveUnit(this.startingCapitals, u)
-    endmethod
-
-    method addCapital takes unit u returns nothing
-      local integer i = 0
-      call GroupAddUnit(this.capitals, u)
-      if team == startingTeam then
-        call GroupAddUnit(this.startingCapitals, u)
-        //Add to corresponding starting enemy team's list of starting enemy capital's
-        if this.startingEnemyTeam != 0 then
-          loop
-          exitwhen i == startingEnemyTeam.size
-            call this.startingEnemyTeam.getPersonById(i).addStartingEnemyCapital(u)
-            set i = i + 1
-          endloop
-        endif
-      endif
-    endmethod
-
-    method setStartingEnemyTeam takes Team whichTeam returns nothing
-      local integer i = 0
-      if this.startingEnemyTeam == 0 then
-        set this.startingEnemyTeam = whichTeam
-        //Put all of their capitals in this Person's starting enemy capitals
-        loop
-        exitwhen i == whichTeam.size
-          call BlzGroupAddGroupFast(whichTeam.getPersonById(i).startingCapitals, this.startingEnemyCapitals)
-          set i = i + 1
-        endloop
-      else
-        call BJDebugMsg("Attempted to add starting enemy team " + whichTeam.getName() + " to Person already with starting enemy Team " + this.startingEnemyTeam.getName())
-      endif
-    endmethod
-
-    private method setStartingTeam takes Team whichTeam returns nothing
-      set this.startingTeam = whichTeam
-    endmethod */
-
-    //End of MMD scoring methods     
+    private integer factionModCount = 0       //   
 
     method getObjectLimit takes integer i returns integer
       return this.objectLimits[i]
@@ -213,11 +137,9 @@ library Persons initializer OnInit requires Math, GeneralHelpers, Event, Filters
         if Team.getTeam(id) != 0 then
           call Team.getTeam(id).addPlayer(this.p) 
           set this.team = Team.getTeam(id)
+          call MMD_UpdateValueString("lateTeam", this.p, I2S(id))
           set thistype.triggerPerson = this
           call OnPersonTeamJoin.fire()
-          //if this.startingTeam == 0 then
-          //  call setStartingTeam(this.team)
-          //endif
         else
           call BJDebugMsg("Error: attempted to add player " + I2S(GetPlayerId(p)) + " to nonexistent team with ID " + (I2S(id)))
         endif  
