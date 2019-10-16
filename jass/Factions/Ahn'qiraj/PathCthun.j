@@ -22,7 +22,7 @@ library PathCthun initializer OnInit requires AhnqirajConfig, TeamConfig, Contro
       call triggerPerson.setFaction(FACTION_AHNQIRAJ)
       call triggerPerson.setTeam(TEAM_AHNQIRAJ)
 
-      //Deal with units already in Ahn'qiraj
+      //Deal with units already in Ahn'qiraj.
       set tempGroup = CreateGroup()
       set tempGroupB = CreateGroup()
       call GroupEnumUnitsInRect(tempGroup, gg_rct_AhnQiraj, null)
@@ -77,7 +77,7 @@ library PathCthun initializer OnInit requires AhnqirajConfig, TeamConfig, Contro
       //Disable C'thun for all players (THIS SHOULD JUST BE A SYSTEM)
       loop
       exitwhen i > MAX_PLAYERS
-        call SetPlayerTechMaxAllowed(Player(i), 'R04K', 0)
+        call SetPlayerTechMaxAllowed(Player(i), RESEARCh_ID, 0)
         set i = i + 1
       endloop
 
