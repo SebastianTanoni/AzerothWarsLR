@@ -230,10 +230,10 @@ library Artifact initializer OnInit requires Table, Event, Persons, Shore
     method dropped takes nothing returns nothing
       local Shore tempShore = 0
       set Artifact.triggerArtifact = this
-      
+
       if not IsTerrainPathable(GetUnitX(this.owningUnit), GetUnitY(this.owningUnit), PATHING_TYPE_FLOATABILITY) and IsTerrainPathable(GetUnitX(this.owningUnit), GetUnitY(this.owningUnit), PATHING_TYPE_WALKABILITY) then
+        call BJDebugMsg("Deleted")
         set tempShore = GetNearestShore(GetUnitX(this.owningUnit), GetUnitY(this.owningUnit))
-        call BJDebugMsg("dropped")
         set this.item = CreateItem(GetItemTypeId(this.item), tempShore.x, tempShore.y)
       endif
 
@@ -299,9 +299,12 @@ library Artifact initializer OnInit requires Table, Event, Persons, Shore
   endfunction
 
   private function ItemDrop takes nothing returns nothing
-    local Artifact tempArtifact = Artifact.artifactsByType[GetItemTypeId(GetManipulatedItem())]
-    if tempArtifact != 0 then
-      call tempArtifact.dropped()
+    local Artifact tempArtifact = 0
+    if not IsUnitIllusion(GetTriggerUnit()) then
+      set tempArtifact = Artifact.artifactsByType[GetItemTypeId(GetManipulatedItem())]
+      if tempArtifact != 0 then
+        call tempArtifact.dropped()
+      endif
     endif
   endfunction
 
