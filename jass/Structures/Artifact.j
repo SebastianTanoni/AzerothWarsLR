@@ -1,45 +1,45 @@
 library Artifact initializer OnInit requires Table, Event, Persons, Shore
 
   globals
-      Event OnArtifactCreate
-      Event OnArtifactAcquire
-      Event OnArtifactDrop
-      Event OnArtifactDestroy
-      Event OnArtifactOwnerChange                     //The owner of this Artifact changes
-      Event OnArtifactStatusChange                    //An Artifact changes status
-      Event OnArtifactFactionChange                   //The owner of this Artifact changes factions
-      Event OnArtifactCarrierOwnerChange              //The unit carrying an Artifact changes player ownership
-      Event OnArtifactDescriptionChange               //The Artifact has its description changed. This is just text and is not represented anywhere by the Artifact itself
+    Event OnArtifactCreate
+    Event OnArtifactAcquire
+    Event OnArtifactDrop
+    Event OnArtifactDestroy
+    Event OnArtifactOwnerChange                     //The owner of this Artifact changes
+    Event OnArtifactStatusChange                    //An Artifact changes status
+    Event OnArtifactFactionChange                   //The owner of this Artifact changes factions
+    Event OnArtifactCarrierOwnerChange              //The unit carrying an Artifact changes player ownership
+    Event OnArtifactDescriptionChange               //The Artifact has its description changed. This is just text and is not represented anywhere by the Artifact itself
 
-      constant integer ARTIFACT_STATUS_GROUND = 0     //Artifact is on the ground
-      constant integer ARTIFACT_STATUS_UNIT = 1       //Artifact is held by a unit
-      constant integer ARTIFACT_STATUS_SPECIAL = 2    //Artifact is nowhere, but artifically has a location
-      constant integer ARTIFACT_STATUS_HIDDEN = 3     //Artifact does not allow pinging, and only displays text (which is not set automatically)
+    constant integer ARTIFACT_STATUS_GROUND = 0     //Artifact is on the ground
+    constant integer ARTIFACT_STATUS_UNIT = 1       //Artifact is held by a unit
+    constant integer ARTIFACT_STATUS_SPECIAL = 2    //Artifact is nowhere, but artifically has a location
+    constant integer ARTIFACT_STATUS_HIDDEN = 3     //Artifact does not allow pinging, and only displays text (which is not set automatically)
 
-      constant integer ARTIFACT_HOLDER_ABIL_ID = 'A01Y'
+    constant integer ARTIFACT_HOLDER_ABIL_ID = 'A01Y'
   endglobals
 
   //A node in an ArtifactGroup
   private struct ArtifactNode
-      thistype next = 0
-      thistype prev = 0
+    thistype next = 0
+    thistype prev = 0
 
-      readonly Artifact whichArtifact     
+    readonly Artifact whichArtifact     
 
-      method hasNext takes nothing returns boolean
-          if this.next != 0 then
-              return true
-          endif
-          return false
-      endmethod
+    method hasNext takes nothing returns boolean
+      if this.next != 0 then
+        return true
+      endif
+      return false
+    endmethod
 
-      static method create takes Artifact whichArtifact returns thistype
-          local thistype this = thistype.allocate()
+    static method create takes Artifact whichArtifact returns thistype
+      local thistype this = thistype.allocate()
 
-          set this.whichArtifact = whichArtifact
+      set this.whichArtifact = whichArtifact
 
-          return this
-      endmethod        
+      return this
+    endmethod        
   endstruct
 
   //A linkedlist of Artifacts for iteration
@@ -270,15 +270,15 @@ library Artifact initializer OnInit requires Table, Event, Persons, Shore
     static method create takes item whichItem returns Artifact
       local thistype this = thistype.allocate()
       if thistype.artifactsByType[GetItemTypeId(whichItem)] == null then
-          set thistype.artifactsByType[GetItemTypeId(whichItem)] = this
-          set thistype.triggerArtifact = this     //For event response
-          set this.item = whichItem
-          call this.setOwningPerson(0)
-          call OnArtifactCreate.fire()
-          return this
+        set thistype.artifactsByType[GetItemTypeId(whichItem)] = this
+        set thistype.triggerArtifact = this     //For event response
+        set this.item = whichItem
+        call this.setOwningPerson(0)
+        call OnArtifactCreate.fire()
+        return this
       else
-          call BJDebugMsg("ERROR: Attempted to create already existing Artifact from " + GetItemName(whichItem))
-          return 0
+        call BJDebugMsg("ERROR: Attempted to create already existing Artifact from " + GetItemName(whichItem))
+        return 0
       endif
     endmethod
 

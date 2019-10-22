@@ -22,7 +22,7 @@ library ArtifactMenu initializer OnInit requires Artifact, Persons, Faction
   endglobals
 
   private function LoadToc takes string s returns nothing
-    if  not BlzLoadTOCFile(s) then
+    if not BlzLoadTOCFile(s) then
       call BJDebugMsg("Failed to Load TOC: "+s)
     endif	
   endfunction
