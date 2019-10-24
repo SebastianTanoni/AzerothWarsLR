@@ -77,7 +77,7 @@ library PathCthun initializer OnInit requires AhnqirajConfig, TeamConfig, Contro
       //Disable C'thun for all players (THIS SHOULD JUST BE A SYSTEM)
       loop
       exitwhen i > MAX_PLAYERS
-        call SetPlayerTechMaxAllowed(Player(i), RESEARCh_ID, 0)
+        call SetPlayerTechMaxAllowed(Player(i), RESEARCH_ID, 0)
         set i = i + 1
       endloop
 
