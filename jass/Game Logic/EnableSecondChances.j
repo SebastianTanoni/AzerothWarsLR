@@ -4,7 +4,7 @@
 library EnableSecondChances initializer OnInit requires Team, Persons 
 
   globals
-    private integer RESEARCH_DELAY = 5
+    private integer RESEARCH_DELAY = 180
   endglobals
 
   private function EnableResearchForAll takes integer researchId returns nothing
@@ -18,7 +18,6 @@ library EnableSecondChances initializer OnInit requires Team, Persons
   
   private function Actions takes nothing returns nothing
     local Team triggerTeam = GetTriggerTeam()
-    call BJDebugMsg("EnableSecondChances fired")
     if triggerTeam.size == 0 then
       call TriggerSleepAction(RESEARCH_DELAY)
       if triggerTeam.id == TEAM_SCOURGE then
