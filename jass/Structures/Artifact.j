@@ -232,7 +232,6 @@ library Artifact initializer OnInit requires Table, Event, Persons, Shore
       set Artifact.triggerArtifact = this
 
       if not IsTerrainPathable(GetUnitX(this.owningUnit), GetUnitY(this.owningUnit), PATHING_TYPE_FLOATABILITY) and IsTerrainPathable(GetUnitX(this.owningUnit), GetUnitY(this.owningUnit), PATHING_TYPE_WALKABILITY) then
-        call BJDebugMsg("Deleted")
         set tempShore = GetNearestShore(GetUnitX(this.owningUnit), GetUnitY(this.owningUnit))
         set this.item = CreateItem(GetItemTypeId(this.item), tempShore.x, tempShore.y)
       endif
